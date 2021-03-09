@@ -1,0 +1,23 @@
+{
+  "name": "text-tile.js",
+  "version": "1.0.0",
+  "description": "A 2d bin packing problem solver developed for a small textile and tapestry company",
+  "main": "",
+  "scripts": {
+    "test": "jest --verbose --coverage --silent"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Rahjael/Tex-tile.js.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Rahjael/Tex-tile.js/issues"
+  },
+  "homepage": "https://github.com/Rahjael/Tex-tile.js#readme",
+  "devDependencies": {
+    "jest": "^26.6.3"
+  }
+}

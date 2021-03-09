@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tex-Tile.js</title>
+
+  <script src="./js/DOMManager.js" defer></script>
+  <script src="./index.js" defer></script>
+
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+
+  <div id="input-frame">
+
+      <form>
+        <h1>Dimensioni pezza origine</h1>
+        <h2>valori in CM</h2>
+
+        <div id="source-piece-dimensions">      
+        <input type="number" id="source-piece-width" value="340" placeholder="Altezza" title="Altezza del rotolo da tagliare (da cimosa a cimosa)">
+        <input type="number" id="source-piece-height" value="3000" placeholder="Lunghezza" title="Lunghezza massima del rotolo">
+        </div>
+        
+        <br />
+        <br />
+        <br />
+        <h1>Misure tagli</h1>
+        <h2>valori in CM</h2>
+
+        <div id="input-items-container">
+        </div>
+
+        <div id="input-add-items-container">
+          <input type="number" id="items-to-add" placeholder="Qtà tagli" value="1">
+          <button onclick="domManager.appendNewInputFields()" id="btn-add-items" type="button">Aggiungi tagli</button>
+      </div>
+        <button onclick="domManager.submitButtonActions()" id="btn-submit" type="button">Invia</button>
+        <button onclick="domManager.randomizeInput()" id="btn-randomize" type="button">Randomizza</button>
+      </form>
+
+  </div>
+
+  <div id="items-to-place">
+    <h1>Pezzi da tagliare</h1>
+
+    <div id="items-preview-container">
+
+    </div>
+
+  </div>
+
+  
+  <div id="output-frame">    
+    <h1>Ottimizzazione</h1>
+
+    <div id="len-required"></div>
+
+    <div id="output-sorted-shapes-container"></div>
+
+    
+    <div id="output-unplaced-items-container">
+      <h2>Pezzi non collocati</h2>
+
+    </div>
+
+  </div>
+
+</body>
+</html>
