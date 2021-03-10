@@ -73,7 +73,7 @@ class Sorter {
       pieces: pieces
     }
 
-    console.log(objectToReturn);
+    //console.log(objectToReturn);
 
     return objectToReturn;
 

@@ -282,11 +282,10 @@ class DOMManager {
     
     const allData = Array.from(document.querySelectorAll(".input-item"));
     if(allData.length === 1) {
-      return // Yes, return void, function does nothing if less than 2 pieces are present
+      return // function does nothing if less than 2 pieces are present
     }
     
     // Check for invalid data in input fields
-    console.log("allData: ", allData)
     let errorsFound = false;
     allData.forEach( item => {
       let widthField = item.querySelector(".item-width");
@@ -297,11 +296,11 @@ class DOMManager {
       heightField.style.background= "white";
 
       // Check fields for valid data
-      if(widthField.value === "" || Number.isNaN(widthField.value)){
+      if(widthField.value === "" || Number.isNaN(Number(widthField.value))){
         errorsFound = true;
         widthField.style.background= "rgb(255, 61, 36)";
       }
-      if(heightField.value === "" || Number.isNaN(heightField.value)){
+      if(heightField.value === "" || Number.isNaN(Number(heightField.value))){
         errorsFound = true;
         heightField.style.background = "rgb(255, 61, 36)";
       }
