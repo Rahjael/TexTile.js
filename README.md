@@ -15,17 +15,23 @@ Live testing (App is currently in Italian only, sorry):
 Where I got so far:
 
 - GUI: 
-  uses HTML/CSS to be able to simply input data and get a graphical result for a suggested configuration.
+  - uses HTML/CSS to be able to simply input data and get a graphical result for a suggested configuration.
 
 - Algorithms:
-  - shortest length with grid: 
+  - Shortest length with grid:
     this is a greedy algorithm that uses a grid to keep track of where the pieces are. It is not 100% safe but it works fine most of the time. It arranges the pieces prioritising the least amount of linear fabric to buy.
 
 
 Future plans:
 
 - GUI:
-  implement the ability for the user to manually change shapes' arrangement and suggest a solution to the developer. Gathered data will be used to improve the sorting algorithm.
+  - implement the ability for the user to manually change shapes' arrangement and suggest a solution to the developer. Gathered data will be used to improve the sorting algorithm.
+
+  - ability to import/export configurations so user doesn't have to type it in every time.
+
+  - ability to export output as pdf to save it / print it.
 
 - Algorithms:
   - implement an algorithm with a different criterion, prioritising the biggest amount of available squared area after the pieces have been arranged. I have a vague idea of how to do this, but I need more time.
+
+  - try to implement an algorithm that doesn't need an underlying grid and manages to arrange the pieces only using vertices coordinates. I have no idea how to do this, but I will try if I find the time.
