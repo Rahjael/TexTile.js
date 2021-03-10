@@ -1,5 +1,4 @@
 
-
 class DOMManager {
   /*
     This class manipulates all of the DOM and should be the only
@@ -37,14 +36,13 @@ class DOMManager {
     this.divOutputSortedShapesContainerId = "#output-sorted-shapes-container";
     this.divUnplacedItemsId = "#unplaced-items";
 
-
     this.inputItemsContainerNode = document.querySelector("#input-items-container");
-
 
     // Program state
     this.inputItemsCounter = 0;
 
     // Handling this is important when unit testing with Jest
+    // otherwise DOM calls throw errors everywhere
     try {
       this.instantiateInputArea();
     } catch(e){
@@ -230,9 +228,7 @@ class DOMManager {
     // ...for the delete buttons...
     let allDelButtons = document.querySelectorAll(".btn-delete");
     allDelButtons.forEach( (button, i) => {
-      if(i != 0) {
-        button.setAttribute("onclick", "domManager.delInputItem('#input-item-" + i + "')");
-      }
+      button.setAttribute("onclick", "domManager.delInputItem('#input-item-" + (i + 1) + "')");
     });
     // ... and for switch dimensions buttons
     let allSwitchButtons = document.querySelectorAll(".btn-switch-dimensions");
@@ -272,22 +268,46 @@ class DOMManager {
 
   /* istanbul ignore next */
   fetchInputData() {
-    // Gathers data from the page and returns an object:
+    // Gathers data from the page and returns an object
 
     let dataToReturn = {
-        sourcePiece: {},
-        pieces: []
-      };
-
+      sourcePiece: {},
+      pieces: []
+    };
+    
     dataToReturn.sourcePiece = {
       width: Number(document.querySelector(this.sourcePieceWidthId).value),
       height: Number(document.querySelector(this.sourcePieceHeightId).value)
     };
-
+    
     const allData = Array.from(document.querySelectorAll(".input-item"));
     if(allData.length === 1) {
       return // Yes, return void, function does nothing if less than 2 pieces are present
     }
+    
+    // Check for invalid data in input fields
+    console.log("allData: ", allData)
+    let errorsFound = false;
+    allData.forEach( item => {
+      let widthField = item.querySelector(".item-width");
+      let heightField = item.querySelector(".item-height");
+
+      // Reset bgcolor from previous errors
+      widthField.style.background= "white";
+      heightField.style.background= "white";
+
+      // Check fields for valid data
+      if(widthField.value === "" || Number.isNaN(widthField.value)){
+        errorsFound = true;
+        widthField.style.background= "rgb(255, 61, 36)";
+      }
+      if(heightField.value === "" || Number.isNaN(heightField.value)){
+        errorsFound = true;
+        heightField.style.background = "rgb(255, 61, 36)";
+      }
+    })
+    if(errorsFound) return null;
+
 
     // Populate the array with info about the rectangles
     // The replace() part is to sanitize user input in case of decimals
@@ -335,10 +355,19 @@ class DOMManager {
   submitButtonActions() {
     let dataObject = this.fetchInputData();
 
+    if(dataObject == null) {
+      console.log("WARNING: dataObject is null. An error occured during data fetching");
+      return;
+    }
+
+    // have sorter object modify dataObject with x and y attributes for each shape
+    const sorter = new Sorter(dataObject.sourcePiece, dataObject.pieces);
+    // TODO implement a selector for choosing an algorithm
+    dataObject = sorter.shortestHeightSorterWithGrid();
+
     this.drawInputPieces(dataObject);
     this.drawOutput(dataObject);
   }
-
 
   /* istanbul ignore next */
   drawOutput(dataObject) {
@@ -353,22 +382,18 @@ class DOMManager {
       unplacedArea.remove();
     }
 
-    // TODO have sorter object modify dataObject with x and y attributes for each shape
-
     mainArea = this.createRectangleShapeDiv(dataObject.sourcePiece, "source-piece");
-    let divs = dataObject.pieces.map( piece => {
+
+    const divs = dataObject.pieces.map( piece => {
       let newDiv = this.createRectangleShapeDiv(piece, "output-shape");
-      newDiv.style.left = piece.x;
-      newDiv.style.top = piece.y;
+      newDiv.style.left = piece.x +"px";
+      newDiv.style.top = piece.y + "px";
+      //console.log("newDiv for output created: ", newDiv);
       return newDiv;
     });
 
-    console.log(divs);
-
-
     // Setup and draw main area
     mainArea.setAttribute("id", "source-piece");
-
     divs.forEach( div => mainArea.append(div));
 
 
