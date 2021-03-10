@@ -8,7 +8,7 @@ Given a set of N rectangular shapes of any sizes, it helps find the best arrange
 
 Live testing (App is currently in Italian only, sorry): 
 
-<insert link>
+(insert link)
 
 
 
@@ -20,6 +20,9 @@ Where I got so far:
 - Algorithms:
   - Shortest length with grid:
     this is a greedy algorithm that uses a grid to keep track of where the pieces are. It is not 100% safe but it works fine most of the time. It arranges the pieces prioritising the least amount of linear fabric to buy.
+
+
+
 
 
 Future plans:
