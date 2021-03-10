@@ -91,6 +91,7 @@ class Sorter {
   
   attachRectToArea(gridArray, x, y, rect) {
     // Sets rect coordinates and fills grid cells with references to this rect
+    // XXX Assumes shape can fit at provided coordinates
 
     rect.x = x;
     rect.y = y;
@@ -106,6 +107,7 @@ class Sorter {
     //console.log("attached", rect);
   }
   
+  /* istanbul ignore next */
   rectFitsThisXY(gridArray, x, y, rect, isUser) { // Needs a grid
     // The area is scanned left to right and top to bottom and it assumes
     // the current rectangle is smaller than the previously placed one.
