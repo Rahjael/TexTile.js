@@ -1,5 +1,5 @@
 
-# Tex-tile.js"
+# TexTile.js"
 
 A 2d bin packing problem solver developed for a small textile and tapestry business based in Prato, Tuscany.
 

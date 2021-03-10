@@ -1,7 +1,7 @@
 {
-  "name": "text-tile.js",
+  "name": "textile.js",
   "version": "1.0.0",
-  "description": "A 2d bin packing problem solver developed for a small textile and tapestry company",
+  "description": "A 2d bin packing problem solver",
   "main": "",
   "scripts": {
     "test": "jest --verbose --coverage --silent"
