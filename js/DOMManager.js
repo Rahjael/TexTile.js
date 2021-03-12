@@ -210,7 +210,7 @@ class DOMManager {
 
   /* istanbul ignore next */
   appendNewInputFields(howMany = 1, isDuplicate = false, thisId = false) {
-    if(howMany != 1) {
+    if(!isDuplicate) {
       howMany = Number(document.querySelector(this.howManyItemsToAddId).value);
     }
     [...Array(howMany)].forEach( i => {
@@ -235,11 +235,12 @@ class DOMManager {
     this.reassignInputFieldsIds();
   }
 
+  /* istanbul ignore next */
   duplicateInputItem(selector) {
     this.appendNewInputFields(1, true, selector);
   }
-
-
+  
+  /* istanbul ignore next */
   reassignInputFieldsIds() {
     // recalculate and reassign ids...
     // ...for input fields...

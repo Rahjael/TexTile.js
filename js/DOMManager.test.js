@@ -11,7 +11,7 @@ test('Creation of 1 item', () => {
 })
 
 test('Expected number of div children when only one item', () => {
-  expect(div1.children.length).toBe(7);
+  expect(div1.children.length).toBe(8);
 })
 
 test('Creation of 2 items', () => {
@@ -27,7 +27,7 @@ test('InputItemsCounter works as intended', () => {
 })
 
 test('Expected number of div children when more than one item', () => {
-  expect(div3.children.length).toBe(8);
+  expect(div3.children.length).toBe(9);
 })
 
 const instance2 = new DOMManager();
