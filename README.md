@@ -18,7 +18,9 @@ Temporary link (updated 11/03/2021): http://adrianotesting.000webhostapp.com/tex
 - *GUI:* 
   - [x] uses HTML/CSS to be able to simply input data and get a graphical result for a suggested configuration.
 
-  - [ ] Duplicate line (for multiple pieces with same dimensions)
+  - [x] ability to duplicate a line (for multiple pieces with same dimensions)
+  
+  - [x] extend data validation to all numerical fields
 
   - [ ] Dropdown menu for different kind of tasks (fabric, PVC, etc...)
 
@@ -26,7 +28,6 @@ Temporary link (updated 11/03/2021): http://adrianotesting.000webhostapp.com/tex
 
   - [ ] ability to export output as pdf to save it / print it.
 
-  - [x] extend data validation to all numerical fields
 
   - [ ] (optional) implement the ability for the user to manually change shapes' arrangement and suggest a solution to the developer. Gathered data will be used to improve the sorting algorithm. This was implemented and working in the prototype, but I'm keeping it disabled in the current refactoring, because it is still buggy and not really helpful at the moment.
 

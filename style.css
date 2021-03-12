@@ -87,6 +87,13 @@ button:hover {
   font-size: .7rem;
 }
 
+.btn-duplicate {
+  margin: 5px;
+  width: 40px;
+  height: 1rem;
+  font-size: .7rem;
+}
+
 .btn-delete:hover {
   background:rgb(186, 255, 188);
   animation-name: button-color-red;

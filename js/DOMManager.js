@@ -122,8 +122,17 @@ class DOMManager {
     // Prevent button from being selected with Tab
     delButton.setAttribute("tabindex", "-1");
 
+    const duplicateButton = document.createElement("button");
+    duplicateButton.setAttribute("onclick", "domManager.duplicateInputItem('#input-item-" + itemId + "')");
+    duplicateButton.setAttribute("class", "btn-duplicate");
+    duplicateButton.setAttribute("type", "button");
+    duplicateButton.setAttribute("title", "Duplica queste misure");
+    duplicateButton.innerText = "Duplica";
+    // Prevent button from being selected with Tab
+    duplicateButton.setAttribute("tabindex", "-1");
+
     // Append all nodes
-    newItem.append(labelField, widthField, switchButton, heightField, hHemField, vHemSupField, vHemInfField);
+    newItem.append(labelField, widthField, switchButton, heightField, hHemField, vHemSupField, vHemInfField, duplicateButton);
     
     // Prevent delButton to be added if only 1 input field is present
     if(this.inputItemsCounter > 0) {
@@ -200,12 +209,59 @@ class DOMManager {
   */
 
   /* istanbul ignore next */
-  appendNewInputFields() {
-    const howMany = Number(document.querySelector(this.howManyItemsToAddId).value);
-  
+  appendNewInputFields(howMany = 1, isDuplicate = false, thisId = false) {
+    if(howMany != 1) {
+      howMany = Number(document.querySelector(this.howManyItemsToAddId).value);
+    }
     [...Array(howMany)].forEach( i => {
       const newInputField = this.createNewItemInputField();
-      this.inputItemsContainerNode.append(newInputField);
+
+      if(isDuplicate) {
+        let thisNode = document.querySelector(thisId);
+
+        for(let i = 0; i < thisNode.children.length; i++) {
+          newInputField.children[i].value = thisNode.children[i].value;
+        }
+
+        console.log("New node: ", newInputField)
+        thisNode.parentNode.insertBefore(newInputField, thisNode.nextSibling);
+      }
+      else {
+        this.inputItemsContainerNode.append(newInputField);
+      }
+
+    });
+    
+    this.reassignInputFieldsIds();
+  }
+
+  duplicateInputItem(selector) {
+    this.appendNewInputFields(1, true, selector);
+  }
+
+
+  reassignInputFieldsIds() {
+    // recalculate and reassign ids...
+    // ...for input fields...
+    let allInputLines = document.querySelectorAll(".input-item");
+    allInputLines.forEach( (item, i) => {
+      item.id = "input-item-" + i;
+    });
+    // ...for the delete buttons...
+    let allDelButtons = document.querySelectorAll(".btn-delete");
+    allDelButtons.forEach( (button, i) => {
+      button.setAttribute("onclick", "domManager.delInputItem('#input-item-" + (i + 1) + "')");
+    });
+    // ... for switch dimensions buttons ...
+    let allSwitchButtons = document.querySelectorAll(".btn-switch-dimensions");
+    allSwitchButtons.forEach( (button, i) => {
+      button.setAttribute("onclick", "domManager.switchInput('#input-item-" + i + "')");
+    });
+    // ... and for duplicate buttons
+    let allDuplicateButtons = document.querySelectorAll(".btn-duplicate");
+    allDuplicateButtons.forEach( (button, i) => {
+      button.setAttribute("onclick", "domManager.duplicateInputItem('#input-item-" + i + "')");
+      console.log(button.getAttribute("onclick"))
     });
 
     // update submit button total number
@@ -219,25 +275,7 @@ class DOMManager {
     itemToRemove.remove(itemToRemove);
     this.inputItemsCounter -= 1;
 
-    // recalculate and reassign ids...
-    // ...for input fields...
-    let allInputLines = document.querySelectorAll(".input-item");
-    allInputLines.forEach( (item, i) => {
-      item.id = "input-item-" + i;
-    })
-    // ...for the delete buttons...
-    let allDelButtons = document.querySelectorAll(".btn-delete");
-    allDelButtons.forEach( (button, i) => {
-      button.setAttribute("onclick", "domManager.delInputItem('#input-item-" + (i + 1) + "')");
-    });
-    // ... and for switch dimensions buttons
-    let allSwitchButtons = document.querySelectorAll(".btn-switch-dimensions");
-    allSwitchButtons.forEach( (button, i) => {
-      button.setAttribute("onclick", "domManager.switchInput('#input-item-" + i + "')");
-    })
-    
-    // update submit button total number
-    document.querySelector(this.btnSubmitId).innerText = "Invia " + "(" + this.inputItemsCounter + ")";
+    this.reassignInputFieldsIds();    
   }
 
   /* istanbul ignore next */
@@ -301,7 +339,7 @@ class DOMManager {
         field.style.background = "white";
         
         // Check for valid data
-        console.log("Data validation: ", field);
+        //console.log("Data validation: ", field);
         if(field.value === "" || Number.isNaN(Number(field.value))){
           errorsFound = true;
           field.style.background= "rgb(255, 61, 36)";
