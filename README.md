@@ -26,7 +26,7 @@ Temporary link (updated 11/03/2021): http://adrianotesting.000webhostapp.com/tex
 
   - [ ] ability to export output as pdf to save it / print it.
 
-  - [ ] expand data validation to all numerical fields
+  - [x] extend data validation to all numerical fields
 
   - [ ] (optional) implement the ability for the user to manually change shapes' arrangement and suggest a solution to the developer. Gathered data will be used to improve the sorting algorithm. This was implemented and working in the prototype, but I'm keeping it disabled in the current refactoring, because it is still buggy and not really helpful at the moment.
 

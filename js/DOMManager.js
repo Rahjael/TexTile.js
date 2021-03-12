@@ -290,22 +290,26 @@ class DOMManager {
     allData.forEach( item => {
       let widthField = item.querySelector(".item-width");
       let heightField = item.querySelector(".item-height");
+      let hHemField = item.querySelector(".item-h-hem");
+      let vHemSupField = item.querySelector(".item-v-hem-sup");
+      let vHemInfField = item.querySelector(".item-v-hem-inf");
 
-      // Reset bgcolor from previous errors
-      widthField.style.background= "white";
-      heightField.style.background= "white";
+      let fields = [widthField, heightField, hHemField, vHemInfField, vHemSupField];
 
-      // Check fields for valid data
-      if(widthField.value === "" || Number.isNaN(Number(widthField.value))){
-        errorsFound = true;
-        widthField.style.background= "rgb(255, 61, 36)";
-      }
-      if(heightField.value === "" || Number.isNaN(Number(heightField.value))){
-        errorsFound = true;
-        heightField.style.background = "rgb(255, 61, 36)";
-      }
-    })
-    if(errorsFound) return null;
+      fields.forEach( field => {
+        // Reset bgcolor from previous errors
+        field.style.background = "white";
+        
+        // Check for valid data
+        console.log("Data validation: ", field);
+        if(field.value === "" || Number.isNaN(Number(field.value))){
+          errorsFound = true;
+          field.style.background= "rgb(255, 61, 36)";
+        }
+      
+      });
+    });
+      if(errorsFound) return null; // Stop fetching
 
 
     // Populate the array with info about the rectangles
