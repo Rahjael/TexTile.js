@@ -42,6 +42,7 @@ class Sorter {
     const mainGrid = [...Array(this.mainArea.width)].map( () => [...Array(this.mainArea.height)].fill(true));
     const pieces = this.pieces.map( (piece) => piece ).sort( (obj1, obj2) => obj2.area - obj1.area );
 
+
     // Find the sweet spot for every rectangle and attach it
     pieces.forEach( rect => {
       
@@ -80,6 +81,63 @@ class Sorter {
 
     return objectToReturn;
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+  returnSortedData(choice) {
+    // Choices:
+    // minLength
+    // improvedMinLength
+
+    let orderedData;
+
+    switch(choice) {
+      case 'minLength': 
+        orderedData = this.shortestHeightSorterWithGrid();
+        break;
+
+      case 'improvedMinLength':
+        orderedData = this.improvedShortestHeightSorterWithGrid();
+        break;
+
+      default:
+        orderedData = this.shortestHeightSorterWithGrid();
+    }
+
+    return orderedData;
+  }
+
+
+
+
+
+
+
+
 
 
   /*

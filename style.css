@@ -173,6 +173,9 @@ input[type=radio] {
   flex-flow: row nowrap;
 }
 
+#algorithm-selection-container {
+  margin: 15px;
+}
 
 #items-to-place {
   border-left: solid black 1px;

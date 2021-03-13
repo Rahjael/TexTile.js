@@ -52,6 +52,15 @@
           <input type="number" id="items-to-add" placeholder="Qtà tagli" value="1">
           <button onclick="domManager.appendNewInputFields()" id="btn-add-items" type="button">Aggiungi tagli</button>
         </div>
+
+        <div id="algorithm-selection-container">
+          <h2>Algoritmo:</h2>
+          <select name="algorithm-selection" id="algorithm-selection">
+            <option value="minLength">Minima lunghezza</option>
+            <option value="improvedMinLength">Minima lunghezza (migliorato)</option>
+          </select>
+        </div>
+
         <button onclick="domManager.submitButtonActions()" id="btn-submit" type="button">Calcola</button>
         <button onclick="domManager.exportForPrinting()" id="btn-exportPDF" type="button">Stampa risultato</button>
         <button onclick="domManager.randomizeInput()" id="btn-randomize" type="button">Randomizza</button>

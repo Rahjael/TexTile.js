@@ -25,6 +25,7 @@ class DOMManager {
     this.divItemsId = "#input-items-container";
     this.divAddItemsId = "#input-add-items-container";
     this.howManyItemsToAddId = "#items-to-add";
+    this.divAlgorithmSelectiondId = "#algorithm-selection-container";
     this.btnAddItemsId = "#btn-add-items";
     this.btnSubmitId = "#btn-submit";
     this.btnRandomizeId = "#btn-randomize";
@@ -440,17 +441,23 @@ class DOMManager {
 
   /* istanbul ignore next */
   submitButtonActions() {
-    let dataObject = this.fetchInputData();
+    let dataObject = this.fetchInputData(); // Data from fields
 
+    
+    
     if(dataObject == null) {
       console.log("WARNING: dataObject is null. An error occured during data fetching");
       return;
     }
+    
+    // Fetch selected algorithm
+    let algoSelector = document.querySelector("#algorithm-selection");
+    let algoChoice = algoSelector.options[algoSelector.selectedIndex].value;
 
-    // have sorter object modify dataObject with x and y attributes for each shape
     const sorter = new Sorter(dataObject.sourcePiece, dataObject.pieces);
-    // TODO implement a selector for choosing an algorithm
-    dataObject = sorter.shortestHeightSorterWithGrid();
+
+    // have sorter modify dataObject with x and y attributes for each shape
+    dataObject = sorter.returnSortedData(algoChoice);
 
     this.drawInputPieces(dataObject);
     this.drawOutput(dataObject);
@@ -563,7 +570,7 @@ class DOMManager {
     let outputHTML = document.querySelector(this.divOutputFrameId).cloneNode(true);
 
     outputHTML.querySelector(this.divUnplacedItemsId).remove();
-    
+
     // var divText = document.getElementById("pass").outerHTML;
     let newWindow = window.open('', '', 'width=800,height=600');
 
