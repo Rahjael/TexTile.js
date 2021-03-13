@@ -135,6 +135,11 @@ button:hover {
   height: 50px;
 }
 
+#btn-exportPDF {
+  width: 50%;
+  height: 50px;
+}
+
 #btn-randomize {
   width: 50%;
   height: 50px;

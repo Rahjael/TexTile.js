@@ -40,6 +40,7 @@ class DOMManager {
 
     // Program state
     this.inputItemsCounter = 0;
+    this.outputGenerated = false;
 
     // Handling this is important when unit testing with Jest
     // otherwise DOM calls throw errors everywhere
@@ -309,7 +310,7 @@ class DOMManager {
     });
 
     // update submit button total number
-    document.querySelector(this.btnSubmitId).innerText = "Invia " + "(" + this.inputItemsCounter + ")";
+    document.querySelector(this.btnSubmitId).innerText = "Calcola posizione pezzi " + "(" + this.inputItemsCounter + ")";
   }
 
   /* istanbul ignore next */
@@ -483,18 +484,38 @@ class DOMManager {
 
 
     document.querySelector(this.divOutputSortedShapesContainerId).append(mainArea);
+    this.outputGenerated = true;
 
 
     // TODO add unplaced area and other divs
-
-
-
-
-
     
   }
 
+  exportPDF() {
+    // TODO write this
 
+    if(!this.outputGenerated) {
+      console.log("ERROR: no output to print");
+      return;
+    }
+
+    let HTMLoutput = document.querySelector(this.divOutputSortedShapesContainerId);
+
+    let printingAnchor = document.createElement('a');
+    printingAnchor.setAttribute('href', 'data:text/plain;charset=utf-8, ' + encodeURIComponent('TESTING'));
+    printingAnchor.setAttribute('download', 'test_filename');
+
+    printingAnchor.style.display = 'none';
+    document.body.append(printingAnchor);
+
+    printingAnchor.click();
+
+    document.body.remove(printingAnchor);
+
+    
+
+
+  }
 
 
 

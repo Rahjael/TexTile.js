@@ -8,7 +8,8 @@ Given a set of N rectangular shapes of any sizes, it helps find the best arrange
 
 Live testing (App is currently in Italian only, sorry): 
 
-Temporary link (updated 11/03/2021): http://adrianotesting.000webhostapp.com/textilejs/
+:warning::warning::warning:The program has been tested only with Firefox:warning::warning::warning:
+Temporary link (updated 13/03/2021): http://adrianotesting.000webhostapp.com/textilejs/
 
 
 
@@ -29,7 +30,7 @@ Temporary link (updated 11/03/2021): http://adrianotesting.000webhostapp.com/tex
   - [ ] ability to export output as pdf to save it / print it.
 
 
-  - [ ] (optional) implement the ability for the user to manually change shapes' arrangement and suggest a solution to the developer. Gathered data will be used to improve the sorting algorithm. This was implemented and working in the prototype, but I'm keeping it disabled in the current refactoring, because it is still buggy and not really helpful at the moment.
+  - [ ] (for a later time) implement the ability for the user to manually change shapes' arrangement and suggest a solution to the developer. Gathered data will be used to improve the sorting algorithm. This was implemented and working in the prototype, but I'm keeping it disabled in the current refactoring, because it is still buggy and not really helpful at the moment.
 
 
 - *Algorithms/Internal stuff:*
@@ -40,7 +41,7 @@ Temporary link (updated 11/03/2021): http://adrianotesting.000webhostapp.com/tex
 
   - [ ] implement an algorithm with a different criterion, prioritising the biggest amount of available squared area after the pieces have been arranged. I have a vague idea of how to do this, but I need more time.
 
-  - [ ] try to implement an algorithm that doesn't need an underlying grid and manages to arrange the pieces only using vertices coordinates. I have no idea how to do this, but I will try if I find the time.
+  - [ ] (for a later time) try to implement an algorithm that doesn't need an underlying grid and manages to arrange the pieces only using vertices coordinates. I have no idea how to do this, but I will try if I find the time.
 
 
 
