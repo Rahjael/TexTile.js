@@ -519,7 +519,8 @@ class DOMManager {
         
       <style>
       #output-frame {
-        border: solid black 1px;
+        border-left: solid black 1px;
+        border-right: solid black 1px;
       
         display: flex;
         flex-flow: column nowrap;

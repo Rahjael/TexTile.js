@@ -147,7 +147,8 @@ button:hover {
 
 
 #input-frame {
-  border: solid black 1px;
+  border-left: solid black 1px;
+  border-right: solid black 1px;
 
   display: flex;
   flex-flow: column nowrap;
@@ -174,7 +175,8 @@ input[type=radio] {
 
 
 #items-to-place {
-  border: solid black 1px;
+  border-left: solid black 1px;
+  border-right: solid black 1px;
   max-width: 350px;
 
   display: flex;
@@ -217,7 +219,8 @@ input[type=radio] {
 */
 
 #output-frame {
-  border: solid black 1px;
+  border-left: solid black 1px;
+  border-right: solid black 1px;
 
   display: flex;
   flex-flow: column nowrap;
