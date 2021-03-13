@@ -27,8 +27,7 @@ Temporary link (updated 13/03/2021): http://adrianotesting.000webhostapp.com/tex
 
   - [ ] ability to import/export configurations so user doesn't have to type it in every time.
 
-  - [ ] ability to export output as pdf to save it / print it.
-
+  - [ ] (partially done) ability to export output as pdf to save it / print it.
 
   - [ ] (for a later time) implement the ability for the user to manually change shapes' arrangement and suggest a solution to the developer. Gathered data will be used to improve the sorting algorithm. This was implemented and working in the prototype, but I'm keeping it disabled in the current refactoring, because it is still buggy and not really helpful at the moment.
 

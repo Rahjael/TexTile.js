@@ -198,6 +198,24 @@ input[type=radio] {
 
 
 
+
+
+
+
+
+
+
+
+
+
+/*
+*   !!!!! CAREFUL !!!!!
+*
+*   This section is hard coded in DOMManager.exportForPrinting().
+*   Any change made below this point must be made inside there too.
+*
+*/
+
 #output-frame {
   border: solid black 1px;
 

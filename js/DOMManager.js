@@ -306,7 +306,6 @@ class DOMManager {
     let allDuplicateButtons = document.querySelectorAll(".btn-duplicate");
     allDuplicateButtons.forEach( (button, i) => {
       button.setAttribute("onclick", "domManager.duplicateInputItem('#input-item-" + i + "')");
-      console.log(button.getAttribute("onclick"))
     });
 
     // update submit button total number
@@ -491,7 +490,7 @@ class DOMManager {
     
   }
 
-  exportPDF() {
+  exportForPrinting() {
     // TODO write this
 
     if(!this.outputGenerated) {
@@ -499,18 +498,72 @@ class DOMManager {
       return;
     }
 
-    let HTMLoutput = document.querySelector(this.divOutputSortedShapesContainerId);
+    // XXX CSS here is copypasted directly from the main .css file
+    // I have found no other way to do this so far.
+    // Be careful when editing main css file
+    let headBoilerplate = `
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Tex-Tile.js printing frame</title>
+        
+      <style>
+      #output-frame {
+        border: solid black 1px;
+      
+        display: flex;
+        flex-flow: column nowrap;
+        align-items: center;
+        text-align: center;
+        padding: 20px;
+      }
+      
+      #output-sorted-shapes-container {
+        padding: 10px;
+      }
+      
+      #output-unplaced-items-container {
+        position: relative;
+      }
+      
+      .output-shape {
+        display: flex;
+        position: absolute;
+        align-items: center;
+        justify-content: center;
+        font-size: .7em;
+        text-align: center;
+      }
+      
+      #source-piece {
+        position: relative;
+        background-image: linear-gradient(45deg, #ff002f 20.83%, #ffffff 20.83%, #ffffff 50%, #ff002f 50%, #ff002f 70.83%, #ffffff 70.83%, #ffffff 100%);
+        background-size: 16.97px 16.97px;
+      }
 
-    let printingAnchor = document.createElement('a');
-    printingAnchor.setAttribute('href', 'data:text/plain;charset=utf-8, ' + encodeURIComponent('TESTING'));
-    printingAnchor.setAttribute('download', 'test_filename');
+      </style>
+      `;
 
-    printingAnchor.style.display = 'none';
-    document.body.append(printingAnchor);
+    let outputHTML = document.querySelector(this.divOutputFrameId).cloneNode(true);
 
-    printingAnchor.click();
 
-    document.body.remove(printingAnchor);
+    // var divText = document.getElementById("pass").outerHTML;
+    let newWindow = window.open('', '', 'width=800,height=600');
+
+    newWindow.document.head.innerHTML = headBoilerplate;
+    newWindow.document.body.append(outputHTML);
+
+
+    // console.log(newWindow.document)
+
+    newWindow.print();
+
+    // var doc = newWindow.document;
+    // doc.open();
+    // doc.write(HTMLoutput);
+    // doc.close();
+
+
+
 
     
 

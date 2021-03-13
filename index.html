@@ -36,7 +36,7 @@
 
         <div id="input-pieces-type-container">
           <div>
-            <input type="radio" name="pieces-type" id="radio-fabric" value="fabric">
+            <input type="radio" name="pieces-type" id="radio-fabric" value="fabric" checked>
             <label for="radio-fabric">Tessuto</label>
           </div>
           <div>
@@ -53,10 +53,9 @@
           <button onclick="domManager.appendNewInputFields()" id="btn-add-items" type="button">Aggiungi tagli</button>
         </div>
         <button onclick="domManager.submitButtonActions()" id="btn-submit" type="button">Calcola</button>
-        <button onclick="domManager.exportPDF()" id="btn-exportPDF" type="button">Esporta PDF</button>
+        <button onclick="domManager.exportForPrinting()" id="btn-exportPDF" type="button">Stampa risultato</button>
         <button onclick="domManager.randomizeInput()" id="btn-randomize" type="button">Randomizza</button>
       </form>
-
   </div>
 
   <div id="items-to-place">
