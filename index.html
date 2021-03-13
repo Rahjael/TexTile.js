@@ -55,6 +55,11 @@
         <button onclick="domManager.submitButtonActions()" id="btn-submit" type="button">Calcola</button>
         <button onclick="domManager.exportForPrinting()" id="btn-exportPDF" type="button">Stampa risultato</button>
         <button onclick="domManager.randomizeInput()" id="btn-randomize" type="button">Randomizza</button>
+
+        <!-- 
+        <button onclick="domManager.testSuite(1)" class="btn-test-suite" type="button">Test 1</button>
+        <button onclick="domManager.testSuite(2)" class="btn-test-suite" type="button">Test 2</button> 
+        -->
       </form>
   </div>
 
@@ -68,14 +73,15 @@
   </div>
 
   
-  <div id="output-frame">    
+  <div id="output-frame">
+    
     <h1>Ottimizzazione</h1>
 
     <div id="len-required"></div>
 
     <div id="output-sorted-shapes-container"></div>
 
-    
+
     <div id="output-unplaced-items-container">
       <h2>Pezzi non collocati</h2>
 

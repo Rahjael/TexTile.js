@@ -36,6 +36,8 @@ class DOMManager {
     this.divOutputSortedShapesContainerId = "#output-sorted-shapes-container";
     this.divUnplacedItemsId = "#output-unplaced-items-container";
 
+    this.divPrintingFrameId = "#printing-frame";
+
     this.inputItemsContainerNode = document.querySelector("#input-items-container");
 
     // Program state
@@ -548,16 +550,20 @@ class DOMManager {
       
       #source-piece {
         position: relative;
+        /*
         background-image: linear-gradient(45deg, #ff002f 20.83%, #ffffff 20.83%, #ffffff 50%, #ff002f 50%, #ff002f 70.83%, #ffffff 70.83%, #ffffff 100%);
         background-size: 16.97px 16.97px;
+        */
+        background-color: rgb(255, 255, 255);
+        border: solid 1px black;
       }
-
       </style>
       `;
 
     let outputHTML = document.querySelector(this.divOutputFrameId).cloneNode(true);
 
-
+    outputHTML.querySelector(this.divUnplacedItemsId).remove();
+    
     // var divText = document.getElementById("pass").outerHTML;
     let newWindow = window.open('', '', 'width=800,height=600');
 

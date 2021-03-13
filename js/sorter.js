@@ -73,10 +73,12 @@ class Sorter {
       pieces: pieces
     }
 
+    // TODO check this thing about the margin pixels
+    objectToReturn.sourcePiece.height = this.findMaxLengthInGrid(mainGrid) + 2;
+
     //console.log(objectToReturn);
 
     return objectToReturn;
-
   }
 
 
@@ -85,10 +87,39 @@ class Sorter {
   */
  
 
+
+
+
+
+
+
+
+
+
+
+
   /*
     INTERNAL HELPER FUNCTIONS
   */
   
+  findMaxLengthInGrid(grid) {
+    // grid is array[i][j]
+    let value = 0;
+
+    for(let i = 0; i < grid.length; i++) {
+      for(let j = grid[0].length; j >= 0; j--) {
+        if(grid[i][j - 1] != true && j > value) {
+          value = j;          
+        }
+      }
+    }
+
+    console.log("max length: ", value);
+
+    return value;
+  }
+
+
   attachRectToArea(gridArray, x, y, rect) {
     // Sets rect coordinates and fills grid cells with references to this rect
     // XXX Assumes shape can fit at provided coordinates
