@@ -28,8 +28,8 @@ h1 {
 }
 
 h2 {
-  padding: 10px;
-  font-size: 15px;
+  padding: 5px;
+  font-size: 10px;
 }
 
 form {
@@ -85,6 +85,8 @@ button:hover {
   width: 20px;
   height: 1rem;
   font-size: .7rem;
+  text-decoration: solid;
+  color:rgb(255, 30, 0);
 }
 
 .btn-duplicate {
@@ -147,6 +149,17 @@ button:hover {
   align-items: center;
   padding: 20px;
 
+}
+
+#input-pieces-type-container {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  margin: 20px;
+}
+
+input[type=radio] {
+  width: 30px;
 }
 
 #input-add-items-container {

@@ -74,12 +74,6 @@ class DOMManager {
     labelField.setAttribute("placeholder", "Riferimento");
     labelField.setAttribute("title", "Riferimento");
 
-    const hHemField = document.createElement("input");
-    hHemField.setAttribute("type", "text");
-    hHemField.setAttribute("class", "item-h-hem");
-    hHemField.setAttribute("value", this.hHemDefaultValue);
-    hHemField.setAttribute("title", "Orlo orizzontale");
-
     const widthField = document.createElement("input");
     widthField.setAttribute("type", "text");
     widthField.setAttribute("class", "item-width");
@@ -91,6 +85,12 @@ class DOMManager {
     heightField.setAttribute("class", "item-height");
     heightField.setAttribute("placeholder", "Altezza");
     heightField.setAttribute("title", "Altezza");
+
+    const hHemField = document.createElement("input");
+    hHemField.setAttribute("type", "text");
+    hHemField.setAttribute("class", "item-h-hem");
+    hHemField.setAttribute("value", this.hHemDefaultValue);
+    hHemField.setAttribute("title", "Orlo orizzontale");
 
     const vHemSupField = document.createElement("input");
     vHemSupField.setAttribute("type", "text");
@@ -155,8 +155,51 @@ class DOMManager {
   /* istanbul ignore next */
   instantiateInputArea() {
     this.appendNewInputFields();
+
+    // Add listeners to radio buttons
+    let radioButtons = document.querySelectorAll('input[type=radio]');
+    radioButtons.forEach( btn => {
+      btn.addEventListener('change', () => this.toggleInputType(btn.value));
+    });
+
     console.log("InputArea primed");
   }
+
+  /* istanbul ignore next */
+  toggleInputType(type) {
+    // Changes default values for hems in the input fields
+
+    // TODO this is probably not ideal, but it was the simplest way to implement this feature
+    // without messing too much with other parts of the code. I will probably make it 
+    // nicer in the future
+
+    let hemFields = Array.from(document.querySelectorAll(".item-h-hem"))
+      .concat(Array.from(document.querySelectorAll(".item-v-hem-sup")))
+      .concat(Array.from(document.querySelectorAll(".item-v-hem-inf")));
+
+    hemFields.forEach( field => {
+      if(type === 'pvc') {
+        field.value = 0;
+      }
+      else if(type === 'fabric') {
+        switch(field.getAttribute("class")) {
+          case 'item-h-hem': 
+            field.value = this.hHemDefaultValue;
+            break;
+          case 'item-v-hem-sup':
+            field.value = this.vHemSupDefaultValue;
+            break;
+          case 'item-v-hem-inf':
+            field.value = this.vHemInfDefaultValue;
+            break;
+          default:
+            console.log("toggleInputType: error assigning values to fields");
+        }
+      }
+    });
+  }
+
+
   
   createRectangleShapeDiv(itemData, rectClass) {
     // Creates various kinds of rectangular divs for different purposes

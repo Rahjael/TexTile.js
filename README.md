@@ -22,7 +22,7 @@ Temporary link (updated 11/03/2021): http://adrianotesting.000webhostapp.com/tex
   
   - [x] extend data validation to all numerical fields
 
-  - [ ] Dropdown menu for different kind of tasks (fabric, PVC, etc...)
+  - [x] ~~Dropdown menu~~ Radio buttons for different kind of tasks (fabric, PVC, etc...)
 
   - [ ] ability to import/export configurations so user doesn't have to type it in every time.
 
@@ -35,6 +35,8 @@ Temporary link (updated 11/03/2021): http://adrianotesting.000webhostapp.com/tex
 - *Algorithms/Internal stuff:*
   - [x] Shortest length with grid:
     this is a greedy algorithm that uses a grid to keep track of where the pieces are. It is not 100% safe but it works fine most of the time. It arranges the pieces prioritising the least amount of linear fabric to buy.
+
+  - [ ] assign radio buttons to different algorithms
 
   - [ ] implement an algorithm with a different criterion, prioritising the biggest amount of available squared area after the pieces have been arranged. I have a vague idea of how to do this, but I need more time.
 
