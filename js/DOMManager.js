@@ -34,7 +34,7 @@ class DOMManager {
 
     this.divOutputFrameId = "#output-frame";
     this.divOutputSortedShapesContainerId = "#output-sorted-shapes-container";
-    this.divUnplacedItemsId = "#unplaced-items";
+    this.divUnplacedItemsId = "#output-unplaced-items-container";
 
     this.inputItemsContainerNode = document.querySelector("#input-items-container");
 
@@ -459,7 +459,7 @@ class DOMManager {
 
     // Clean output area if present
     let mainArea = document.querySelector("#source-piece");
-    let unplacedArea = document.querySelector("#unplaced-area");
+    let unplacedArea = document.querySelector("#unplaced-items");
     if(mainArea) {
       mainArea.remove();
     }
@@ -469,30 +469,41 @@ class DOMManager {
 
     mainArea = this.createRectangleShapeDiv(dataObject.sourcePiece, "source-piece");
 
-    const divs = dataObject.pieces.map( piece => {
+    // Create div arrays for placed and unplaced pieces
+    const divsToPlace = [];
+    const divsUnplaced = [];
+    
+    dataObject.pieces.forEach( piece => {
       let newDiv = this.createRectangleShapeDiv(piece, "output-shape");
-      newDiv.style.left = piece.x +"px";
+      newDiv.style.left = piece.x + "px";
       newDiv.style.top = piece.y + "px";
-      //console.log("newDiv for output created: ", newDiv);
-      return newDiv;
+
+      if(piece.positioned) {
+        divsToPlace.push(newDiv);
+      }
+      else {
+        newDiv.style.position = 'static';
+        divsUnplaced.push(newDiv);
+      }
     });
 
     // Setup and draw main area
     mainArea.setAttribute("id", "source-piece");
-    divs.forEach( div => mainArea.append(div));
+    divsToPlace.forEach( div => mainArea.append(div));
 
 
     document.querySelector(this.divOutputSortedShapesContainerId).append(mainArea);
     this.outputGenerated = true;
 
-
     // TODO add unplaced area and other divs
-    
+    let unplacedDiv = document.createElement("div");
+    unplacedDiv.setAttribute("id", "unplaced-items");
+
+    divsUnplaced.forEach( div => unplacedDiv.append(div));
+    document.querySelector(this.divUnplacedItemsId).append(unplacedDiv);
   }
 
   exportForPrinting() {
-    // TODO write this
-
     if(!this.outputGenerated) {
       console.log("ERROR: no output to print");
       return;
