@@ -83,6 +83,70 @@ class Sorter {
   }
 
 
+  improvedShortestHeightSorterWithGrid() {
+    // Version with array grid. Cells:
+    // true: free space
+    // anything else: occupied space
+    // mainGrid[x][y] will be coordinates for pixel and position 
+    // relative to top left corner:
+    // x = margin left offset
+    // y = margin top offset
+
+    // Helper function
+    const isEmptyObject = (obj) => {
+      for(let i in obj) return false;
+      return true;
+    }
+
+    // Check for data
+    if(isEmptyObject(this.mainArea) || this.pieces.length === 0) {
+      console.log("Sorter Error: missing values for area and pieces");
+      return null;
+    }
+
+    // Create main grid, copy ordered pieces into new array
+    const mainGrid = [...Array(this.mainArea.width)].map( () => [...Array(this.mainArea.height)].fill(true));
+    const pieces = this.pieces.map( (piece) => piece ).sort( (obj1, obj2) => obj2.area - obj1.area );
+
+
+    // Find the sweet spot for every rectangle and attach it
+    pieces.forEach( rect => {
+      
+      // This flag breaks the search if a free spot is found
+      let stopChecking = false;
+      
+      for(let mainY = 0; mainY < mainGrid[0].length; mainY++) {
+        for(let mainX = 0; mainX < mainGrid.length; mainX++) {  
+          if(this.rectFitsThisXY(mainGrid, mainX, mainY, rect, false)) {
+            this.attachRectToArea(mainGrid, mainX, mainY, rect);
+            stopChecking = true;
+            break;
+          }
+          else {
+            if(mainGrid[mainX][mainY] != true) {
+              mainX = mainX + mainGrid[mainX][mainY].width-1;
+            }
+            else {
+              //break;
+            }
+          }
+        }
+        if(stopChecking) break;
+      }
+    });
+
+
+
+
+
+    const objectToReturn = {
+      sourcePiece: this.mainArea,
+      pieces: pieces
+    }
+    objectToReturn.sourcePiece.height = this.findMaxLengthInGrid(mainGrid) + 2;
+
+    return objectToReturn;
+  }
 
 
 
@@ -100,7 +164,8 @@ class Sorter {
 
 
 
-  
+
+
 
 
 
@@ -112,6 +177,9 @@ class Sorter {
     // Choices:
     // minLength
     // improvedMinLength
+
+
+    // TODO algorithms' code is too WET, rewrite encapsulating common code
 
     let orderedData;
 
@@ -172,7 +240,7 @@ class Sorter {
       }
     }
 
-    console.log("max length: ", value);
+    //console.log("max length: ", value);
 
     return value;
   }
