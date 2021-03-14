@@ -448,23 +448,29 @@ class DOMManager {
 
   /* istanbul ignore next */
   submitButtonActions() {
-    let dataObject = this.fetchInputData(); // Data from fields
-
-    
+    let dataObject = this.fetchInputData(); // Get data from input fields    
     
     if(dataObject == null) {
       console.log("WARNING: dataObject is null. An error occured during data fetching");
       return;
     }
     
-    // Fetch selected algorithm
+    // Fetch algorithm config
     let algoSelector = document.querySelector("#algorithm-selection");
     let algoChoice = algoSelector.options[algoSelector.selectedIndex].value;
+    let prioritySelector = document.querySelector("#sorting-priority");
+    let priorityChoice = prioritySelector.options[prioritySelector.selectedIndex].value;
 
     const sorter = new Sorter(dataObject.sourcePiece, dataObject.pieces);
 
     // have sorter modify dataObject with x and y attributes for each shape
-    dataObject = sorter.returnSortedData(algoChoice);
+    dataObject = sorter.getSortedData(algoChoice, priorityChoice);
+
+
+    if(dataObject == null) {
+      console.log("WARNING: sorter returned a null object");
+      return;
+    }
 
     this.drawInputPieces(dataObject);
     this.drawOutput(dataObject);
@@ -507,11 +513,10 @@ class DOMManager {
     mainArea.setAttribute("id", "source-piece");
     divsToPlace.forEach( div => mainArea.append(div));
 
-
     document.querySelector(this.divOutputSortedShapesContainerId).append(mainArea);
     this.outputGenerated = true;
 
-    // TODO add unplaced area and other divs
+    // add unplaced area and other divs
     let unplacedDiv = document.createElement("div");
     unplacedDiv.setAttribute("id", "unplaced-items");
 

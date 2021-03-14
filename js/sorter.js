@@ -3,6 +3,14 @@ class Sorter {
   constructor(mainArea = {}, pieces = []) {
     this.mainArea = mainArea;
     this.pieces = pieces;
+
+
+    // Properties expected:
+    // mainArea = array[i][j] for populated grid
+    // pieces = array with pieces objects
+    this.lastSortingResult = {};
+
+
   }
 
   /*
@@ -17,7 +25,7 @@ class Sorter {
     this.pieces = object;
   }
 
-  shortestHeightSorterWithGrid() {
+  shortestHeightSorterWithGrid(mainGrid, pieces) {
     // Version with array grid. Cells:
     // true: free space
     // anything else: occupied space
@@ -25,22 +33,6 @@ class Sorter {
     // relative to top left corner:
     // x = margin left offset
     // y = margin top offset
-
-    // Helper function
-    const isEmptyObject = (obj) => {
-      for(let i in obj) return false;
-      return true;
-    }
-
-    // Check for data
-    if(isEmptyObject(this.mainArea) || this.pieces.length === 0) {
-      console.log("Sorter Error: missing values for area and pieces");
-      return null;
-    }
-
-    // Create main grid, copy ordered pieces into new array
-    const mainGrid = [...Array(this.mainArea.width)].map( () => [...Array(this.mainArea.height)].fill(true));
-    const pieces = this.pieces.map( (piece) => piece ).sort( (obj1, obj2) => obj2.area - obj1.area );
 
 
     // Find the sweet spot for every rectangle and attach it
@@ -74,16 +66,11 @@ class Sorter {
       pieces: pieces
     }
 
-    // TODO check this thing about the margin pixels
-    objectToReturn.sourcePiece.height = this.findMaxLengthInGrid(mainGrid) + 2;
-
-    //console.log(objectToReturn);
-
     return objectToReturn;
   }
 
 
-  shortestHeightSorterWithGridDeeperScan() {
+  shortestHeightSorterWithGridDeeperScan(mainGrid, pieces) {
     // Version with array grid. Cells:
     // true: free space
     // anything else: occupied space
@@ -91,22 +78,6 @@ class Sorter {
     // relative to top left corner:
     // x = margin left offset
     // y = margin top offset
-
-    // Helper function
-    const isEmptyObject = (obj) => {
-      for(let i in obj) return false;
-      return true;
-    }
-
-    // Check for data
-    if(isEmptyObject(this.mainArea) || this.pieces.length === 0) {
-      console.log("Sorter Error: missing values for area and pieces");
-      return null;
-    }
-
-    // Create main grid, copy ordered pieces into new array
-    const mainGrid = [...Array(this.mainArea.width)].map( () => [...Array(this.mainArea.height)].fill(true));
-    const pieces = this.pieces.map( (piece) => piece ).sort( (obj1, obj2) => obj2.area - obj1.area );
 
 
     // Find the sweet spot for every rectangle and attach it
@@ -126,9 +97,6 @@ class Sorter {
             if(mainGrid[mainX][mainY] != true) {
               mainX = mainX + mainGrid[mainX][mainY].width-1;
             }
-            else {
-              //break;
-            }
           }
         }
         if(stopChecking) break;
@@ -136,14 +104,10 @@ class Sorter {
     });
 
 
-
-
-
     const objectToReturn = {
       sourcePiece: this.mainArea,
       pieces: pieces
     }
-    objectToReturn.sourcePiece.height = this.findMaxLengthInGrid(mainGrid) + 2;
 
     return objectToReturn;
   }
@@ -152,28 +116,10 @@ class Sorter {
 
 
 
+  getSortedData(algoChoice, priorityChoice) {
+    // This is the main API to get data from the sorter object
+    // This function assumes this.* attributes have been populated
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  returnSortedData(algoChoice) {
     // Choices:
     // minLength
     // improvedMinLength
@@ -181,20 +127,63 @@ class Sorter {
 
     // TODO algorithms' code is too WET, rewrite encapsulating common code
 
+    // Common checks and preparation common to all algorithms:
+
+    // Helper functions
+    const isEmptyObject = (obj) => {
+      for(let i in obj) return false;
+      return true;
+    }
+
+    const sortPieces = (criterion, pieces) => {
+      return pieces.sort( (obj1, obj2) => {
+        switch(criterion) {
+          case 'area': return obj2.area - obj1.area;
+          case 'width': return obj2.width - obj1.width;
+          default: return obj2.area - obj1.area;
+        }
+      });
+    }
+
+    // Check for data
+    if(isEmptyObject(this.mainArea) || this.pieces.length === 0) {
+      console.log("Sorter Error: missing values for area and pieces");
+      return null;
+    }
+
+    // Create temporary grid to use in calculations
+    const mainGrid = [...Array(this.mainArea.width)].map( () => [...Array(this.mainArea.height)].fill(true));
+
+    // Order pieces according to chosen criterion
+    let pieces = this.pieces.map( (piece) => piece );    
+    pieces = sortPieces(priorityChoice, pieces);
+
+
+    // Apply chosen algorithm
     let orderedData;
 
     switch(algoChoice) {
       case 'minLength': 
-        orderedData = this.shortestHeightSorterWithGrid();
+        orderedData = this.shortestHeightSorterWithGrid(mainGrid, pieces);
         break;
 
       case 'improvedMinLength':
-        orderedData = this.shortestHeightSorterWithGridDeeperScan();
+        orderedData = this.shortestHeightSorterWithGridDeeperScan(mainGrid, pieces);
         break;
 
       default:
         orderedData = this.shortestHeightSorterWithGrid();
     }
+
+    // Save result in sorter for various purposes
+    this.lastSortingResult = {
+      mainGrid: mainGrid,
+      pieces: orderedData.pieces
+    }
+
+    // Trim unnecessary space for better output rendering
+    // TODO fix this offset
+    orderedData.sourcePiece.height = this.findMaxLengthInGrid(mainGrid) + 2;
 
     return orderedData;
   }
