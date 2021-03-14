@@ -472,8 +472,14 @@ class DOMManager {
       return;
     }
 
+
+    this.drawInfo();
     this.drawInputPieces(dataObject);
     this.drawOutput(dataObject);
+  }
+
+  drawInfo() {
+    // TODO write this
   }
 
   /* istanbul ignore next */

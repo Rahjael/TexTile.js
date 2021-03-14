@@ -120,21 +120,16 @@ class Sorter {
     // This is the main API to get data from the sorter object
     // This function assumes this.* attributes have been populated
 
-    // Choices:
-    // minLength
-    // improvedMinLength
+    // algoChoices: minLength, improvedMinLength
+    // priorityChoices: area, width
 
-
-    // TODO algorithms' code is too WET, rewrite encapsulating common code
-
-    // Common checks and preparation common to all algorithms:
-
+    
     // Helper functions
     const isEmptyObject = (obj) => {
       for(let i in obj) return false;
       return true;
     }
-
+    
     const sortPieces = (criterion, pieces) => {
       return pieces.sort( (obj1, obj2) => {
         switch(criterion) {
@@ -144,6 +139,8 @@ class Sorter {
         }
       });
     }
+    
+    // Common checks and preparation common to all algorithms:
 
     // Check for data
     if(isEmptyObject(this.mainArea) || this.pieces.length === 0) {
@@ -175,15 +172,18 @@ class Sorter {
         orderedData = this.shortestHeightSorterWithGrid();
     }
 
+    let maxLength = this.findMaxLengthInGrid(mainGrid);
+
     // Save result in sorter for various purposes
     this.lastSortingResult = {
       mainGrid: mainGrid,
-      pieces: orderedData.pieces
+      pieces: orderedData.pieces,
+      maxLength: maxLength
     }
 
     // Trim unnecessary space for better output rendering
     // TODO fix this offset
-    orderedData.sourcePiece.height = this.findMaxLengthInGrid(mainGrid) + 2;
+    orderedData.sourcePiece.height = maxLength + 2;
 
     return orderedData;
   }
