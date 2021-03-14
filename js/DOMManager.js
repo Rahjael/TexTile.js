@@ -337,6 +337,13 @@ class DOMManager {
   }
 
   /* istanbul ignore next */
+  switchAll() {
+    let inputs = document.querySelectorAll(".input-item");
+    inputs.forEach( item => this.switchInput("#" + item.getAttribute("id")));
+  }
+
+
+  /* istanbul ignore next */
   randomizeInput() {
     // This is just a helper feature to speed up testing
     const inputs = document.querySelectorAll(".input-item");

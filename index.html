@@ -48,16 +48,23 @@
         <div id="input-items-container">
         </div>
 
+        <button onclick="domManager.switchAll()" id="btn-switch-all" type="button">Inverti tutte le dimensioni <br /> (ruota 90°)</button>
+
         <div id="input-add-items-container">
           <input type="number" id="items-to-add" placeholder="Qtà tagli" value="1">
           <button onclick="domManager.appendNewInputFields()" id="btn-add-items" type="button">Aggiungi tagli</button>
         </div>
 
         <div id="algorithm-selection-container">
-          <h2>Algoritmo:</h2>
+          <h2>Impostazioni algoritmo:</h2>
           <select name="algorithm-selection" id="algorithm-selection">
             <option value="minLength">Minima lunghezza</option>
-            <option value="improvedMinLength">Minima lunghezza (migliorato)</option>
+            <option value="improvedMinLength">Minima lunghezza (deeper scan)</option>
+          </select>
+          <select name="sorting-priority" id="sorting-priority">
+            <option>Priorità ordinamento:</option>
+            <option value="area">Area (default)</option>
+            <option value="length">Larghezza</option>
           </select>
         </div>
 

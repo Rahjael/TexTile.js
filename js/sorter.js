@@ -83,7 +83,7 @@ class Sorter {
   }
 
 
-  improvedShortestHeightSorterWithGrid() {
+  shortestHeightSorterWithGridDeeperScan() {
     // Version with array grid. Cells:
     // true: free space
     // anything else: occupied space
@@ -173,7 +173,7 @@ class Sorter {
 
 
 
-  returnSortedData(choice) {
+  returnSortedData(algoChoice) {
     // Choices:
     // minLength
     // improvedMinLength
@@ -183,13 +183,13 @@ class Sorter {
 
     let orderedData;
 
-    switch(choice) {
+    switch(algoChoice) {
       case 'minLength': 
         orderedData = this.shortestHeightSorterWithGrid();
         break;
 
       case 'improvedMinLength':
-        orderedData = this.improvedShortestHeightSorterWithGrid();
+        orderedData = this.shortestHeightSorterWithGridDeeperScan();
         break;
 
       default:

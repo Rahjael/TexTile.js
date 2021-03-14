@@ -145,6 +145,11 @@ button:hover {
   height: 50px;
 }
 
+#btn-switch-all {  
+  width: 50%;
+  height: 40px;
+
+}
 
 #input-frame {
   border-left: solid black 1px;
