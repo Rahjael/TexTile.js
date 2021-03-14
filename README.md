@@ -25,9 +25,9 @@ Temporary link (updated 13/03/2021): http://adrianotesting.000webhostapp.com/tex
 
   - [x] ~~Dropdown menu~~ Radio buttons for different kind of tasks (fabric, PVC, etc...)
 
-  - [ ] ability to import/export configurations so user doesn't have to type it in every time.
+  - [x] ability to export output as pdf to save it / print it.
 
-  - [ ] (partially done) ability to export output as pdf to save it / print it.
+  - [ ] (for a later time) ability to import/export configurations so user doesn't have to type it in every time. (this is not really needed and it may take a while to implement, marked as optional)
 
   - [ ] (for a later time) implement the ability for the user to manually change shapes' arrangement and suggest a solution to the developer. Gathered data will be used to improve the sorting algorithm. This was implemented and working in the prototype, but I'm keeping it disabled in the current refactoring, because it is still buggy and not really helpful at the moment.
 
@@ -35,12 +35,17 @@ Temporary link (updated 13/03/2021): http://adrianotesting.000webhostapp.com/tex
 - *Algorithms/Internal stuff:*
   - [x] Shortest length with grid:
     this is a greedy algorithm that uses a grid to keep track of where the pieces are. It is not 100% safe but it works fine most of the time. It arranges the pieces prioritising the least amount of linear fabric to buy.
+  
+  - [x] Shortest length with grid (deeper scan):
+    this is a slightly improved version in terms of precision, trading off some speed. With very big areas it can get a bit slower than the basic version but the time increment is negligeable for common use, while the result is consistently better.
 
-  - [ ] assign radio buttons to different algorithms
+  - [x] assign ~~radio buttons~~ dropdown selector for different algorithms
 
-  - [ ] implement an algorithm with a different criterion, prioritising the biggest amount of available squared area after the pieces have been arranged. I have a vague idea of how to do this, but I need more time.
+  - [ ] have sorter test many different algorithms before suggesting a solution
 
-  - [ ] (for a later time) try to implement an algorithm that doesn't need an underlying grid and manages to arrange the pieces only using vertices coordinates. I have no idea how to do this, but I will try if I find the time.
+  - [ ] implement an algorithm with a different criterion, prioritising the biggest amount of available squared area after the pieces have been arranged. I have a vague idea of how to do this, but it may take a while.
+
+  - [ ] (for a later time) try to implement an algorithm that doesn't need an underlying grid and manages to arrange the pieces only using vertices coordinates and compute everything using only linear algebra. I am not ready to try this, but I will in the future.
 
 
 
