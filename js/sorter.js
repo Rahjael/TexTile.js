@@ -1,13 +1,15 @@
 class Sorter {
 
-  constructor(mainArea = {}, pieces = []) {
+  constructor(mainArea = {}, pieces = [], canRotate = false) {
     this.mainArea = mainArea;
     this.pieces = pieces;
+    this.canRotate = canRotate;
 
 
     // Properties expected:
     // mainArea = array[i][j] for populated grid
     // pieces = array with pieces objects
+    // maxLength = int
     this.lastSortingResult = {};
 
 
@@ -78,7 +80,6 @@ class Sorter {
     // relative to top left corner:
     // x = margin left offset
     // y = margin top offset
-
 
     // Find the sweet spot for every rectangle and attach it
     pieces.forEach( rect => {

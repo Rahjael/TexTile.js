@@ -34,6 +34,7 @@ class DOMManager {
     this.divItemsPreviewContainerId = "#items-preview-container";
 
     this.divOutputFrameId = "#output-frame";
+    this.divOutputInfoId = "#output-info";
     this.divOutputSortedShapesContainerId = "#output-sorted-shapes-container";
     this.divUnplacedItemsId = "#output-unplaced-items-container";
 
@@ -43,6 +44,7 @@ class DOMManager {
 
     // Program state
     this.inputItemsCounter = 0;
+    this.materialType = 'fabric'; // TODO this should be made more consistent with the rest of the data fetching
     this.outputGenerated = false;
 
     // Handling this is important when unit testing with Jest
@@ -176,6 +178,8 @@ class DOMManager {
     // TODO this is probably not ideal, but it was the simplest way to implement this feature
     // without messing too much with other parts of the code. I will probably make it 
     // nicer in the future
+
+    this.materialType = type;
 
     let hemFields = Array.from(document.querySelectorAll(".item-h-hem"))
       .concat(Array.from(document.querySelectorAll(".item-v-hem-sup")))
@@ -460,26 +464,28 @@ class DOMManager {
     let algoChoice = algoSelector.options[algoSelector.selectedIndex].value;
     let prioritySelector = document.querySelector("#sorting-priority");
     let priorityChoice = prioritySelector.options[prioritySelector.selectedIndex].value;
+    let canRotate = this.materialType == 'fabric' ? false : true;
 
-    const sorter = new Sorter(dataObject.sourcePiece, dataObject.pieces);
+    const sorter = new Sorter(dataObject.sourcePiece, dataObject.pieces, canRotate);
 
     // have sorter modify dataObject with x and y attributes for each shape
     dataObject = sorter.getSortedData(algoChoice, priorityChoice);
-
 
     if(dataObject == null) {
       console.log("WARNING: sorter returned a null object");
       return;
     }
 
+    let maxLength = sorter.lastSortingResult.maxLength;
 
-    this.drawInfo();
+    this.drawInfo(maxLength);
     this.drawInputPieces(dataObject);
     this.drawOutput(dataObject);
   }
 
-  drawInfo() {
-    // TODO write this
+  drawInfo(maxLength) {
+    let infoDiv = document.querySelector(this.divOutputInfoId);
+    infoDiv.innerText = 'Lunghezza da ordinare: ' + maxLength;
   }
 
   /* istanbul ignore next */
