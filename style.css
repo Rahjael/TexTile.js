@@ -178,7 +178,7 @@ input[type=radio] {
   flex-flow: row nowrap;
 }
 
-#algorithm-selection-container {
+#algorithm-config-container {
   margin: 15px;
 }
 

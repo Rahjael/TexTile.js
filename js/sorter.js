@@ -12,6 +12,9 @@ class Sorter {
     // maxLength = int
     this.lastSortingResult = {};
 
+    
+    this.allSolutions = {};
+
 
   }
 
@@ -133,18 +136,27 @@ class Sorter {
     
     const sortPieces = (criterion, pieces) => {
       return pieces.sort( (obj1, obj2) => {
+        let obj1Ratio;
+        let obj2Ratio;
         switch(criterion) {
           case 'area': return obj2.area - obj1.area;
           case 'width': return obj2.width - obj1.width;
           case 'areaRatioDecr': 
-            let obj1Ratio = obj1.area * (Math.min(obj1.width, obj1.height) / Math.max(obj1.width, obj1.height));
-            let obj2Ratio = obj2.area * (Math.min(obj2.width, obj2.height) / Math.max(obj2.width, obj2.height));
+            obj1Ratio = obj1.area * (Math.min(obj1.width, obj1.height) / Math.max(obj1.width, obj1.height));
+            obj2Ratio = obj2.area * (Math.min(obj2.width, obj2.height) / Math.max(obj2.width, obj2.height));
             return obj2Ratio - obj1Ratio;
           case 'areaRatioIncr': 
-            let obj1Ratio = obj1.area * (Math.min(obj1.width, obj1.height) / Math.max(obj1.width, obj1.height));
-            let obj2Ratio = obj2.area * (Math.min(obj2.width, obj2.height) / Math.max(obj2.width, obj2.height));
+            obj1Ratio = obj1.area * (Math.min(obj1.width, obj1.height) / Math.max(obj1.width, obj1.height));
+            obj2Ratio = obj2.area * (Math.min(obj2.width, obj2.height) / Math.max(obj2.width, obj2.height));
             return obj1Ratio - obj2Ratio;
-
+          case 'ratioOnlyDecr':
+            obj1Ratio = obj1.width / obj1.height;
+            obj2Ratio = obj2.width / obj2.height;
+            return obj2Ratio - obj1Ratio;
+          case 'ratioOnlyIncr':
+            obj1Ratio = obj1.width / obj1.height;
+            obj2Ratio = obj2.width / obj2.height;
+            return obj1Ratio - obj2Ratio;
 
           default: return obj2.area - obj1.area;
         }

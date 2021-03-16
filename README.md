@@ -17,7 +17,7 @@ Temporary link (updated 13/03/2021): http://adrianotesting.000webhostapp.com/tex
 **State of things:**
 
 - *GUI:* 
-  - [x] uses HTML/CSS to be able to simply input data and get a graphical result for a suggested configuration.
+  - [x] uses HTML/CSS to be able to simply input data and get a graphical result for a suggested configuration. 
 
   - [x] ability to duplicate a line (for multiple pieces with same dimensions)
   
@@ -25,7 +25,9 @@ Temporary link (updated 13/03/2021): http://adrianotesting.000webhostapp.com/tex
 
   - [x] ~~Dropdown menu~~ Radio buttons for different kind of tasks (fabric, PVC, etc...)
 
-  - [x] ability to export output as pdf to save it / print it.
+  - [x] ability to export output as pdf to save it / print it
+
+  - [x] ability to select different criteria for ordering pieces
 
   - [ ] (for a later time) ability to import/export configurations so user doesn't have to type it in every time. (this is not really needed and it may take a while to implement, marked as optional)
 
@@ -39,9 +41,11 @@ Temporary link (updated 13/03/2021): http://adrianotesting.000webhostapp.com/tex
   - [x] Shortest length with grid (deeper scan):
     this is a slightly improved version in terms of precision, trading off some speed. With very big areas it can get a bit slower than the basic version but the time increment is negligeable for common use, while the result is consistently better.
 
-  - [x] assign ~~radio buttons~~ dropdown selector for different algorithms
+  - [x] ~~radio buttons~~ dropdown selector for different algorithms
 
-  - [ ] have sorter test many different algorithms before suggesting a solution
+  - [x] dropdown selector for different ordering criteria
+
+  - [ ] have sorter suggest an optimal solution based on many background tests
 
   - [ ] implement an algorithm with a different criterion, prioritising the biggest amount of available squared area after the pieces have been arranged. I have a vague idea of how to do this, but it may take a while.
 

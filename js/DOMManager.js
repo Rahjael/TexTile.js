@@ -25,7 +25,7 @@ class DOMManager {
     this.divItemsId = "#input-items-container";
     this.divAddItemsId = "#input-add-items-container";
     this.howManyItemsToAddId = "#items-to-add";
-    this.divAlgorithmSelectiondId = "#algorithm-selection-container";
+    this.divAlgorithmSelectiondId = "#algorithm-config-container";
     this.btnAddItemsId = "#btn-add-items";
     this.btnSubmitId = "#btn-submit";
     this.btnRandomizeId = "#btn-randomize";
