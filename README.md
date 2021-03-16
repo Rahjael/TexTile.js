@@ -27,7 +27,7 @@ Temporary link (updated 13/03/2021): http://adrianotesting.000webhostapp.com/tex
 
   - [x] ability to export output as pdf to save it / print it
 
-  - [x] ability to select different criteria for ordering pieces
+  - [x] ability to select different criteria for sorting pieces
 
   - [ ] (for a later time) ability to import/export configurations so user doesn't have to type it in every time. (this is not really needed and it may take a while to implement, marked as optional)
 
@@ -43,7 +43,7 @@ Temporary link (updated 13/03/2021): http://adrianotesting.000webhostapp.com/tex
 
   - [x] ~~radio buttons~~ dropdown selector for different algorithms
 
-  - [x] dropdown selector for different ordering criteria
+  - [x] dropdown selector for different sorting criteria
 
   - [ ] have sorter suggest an optimal solution based on many background tests
 
