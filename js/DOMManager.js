@@ -96,7 +96,7 @@ class DOMManager {
     hHemField.setAttribute("type", "text");
     hHemField.setAttribute("class", "item-h-hem");
     hHemField.setAttribute("value", this.hHemDefaultValue);
-    hHemField.setAttribute("title", "Orlo orizzontale");
+    hHemField.setAttribute("title", "Orlo laterale");
 
     const vHemSupField = document.createElement("input");
     vHemSupField.setAttribute("type", "text");
