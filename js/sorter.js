@@ -122,7 +122,7 @@ class Sorter {
     // This function assumes this.* attributes have been populated
 
     // algoChoices: minLength, improvedMinLength
-    // priorityChoices: area, width
+    // priorityChoices: area, width, areaRatio
 
     
     // Helper functions
@@ -136,6 +136,12 @@ class Sorter {
         switch(criterion) {
           case 'area': return obj2.area - obj1.area;
           case 'width': return obj2.width - obj1.width;
+          case 'areaRatio': 
+            let obj1Ratio = obj1.area * (Math.min(obj1.width, obj1.height) / Math.max(obj1.width, obj1.height));
+            let obj2Ratio = obj2.area * (Math.min(obj2.width, obj2.height) / Math.max(obj2.width, obj2.height));
+            return obj2Ratio - obj1Ratio;
+
+
           default: return obj2.area - obj1.area;
         }
       });

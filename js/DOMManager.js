@@ -577,6 +577,7 @@ class DOMManager {
         justify-content: center;
         font-size: .7em;
         text-align: center;
+        border: solid 1px black;
       }
       
       #source-piece {
