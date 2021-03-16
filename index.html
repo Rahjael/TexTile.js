@@ -48,7 +48,7 @@
         <div id="input-items-container">
         </div>
 
-        <button onclick="domManager.switchAll()" id="btn-switch-all" type="button">Inverti tutte le dimensioni <br /> (ruota 90°)</button>
+        <button onclick="domManager.switchAll()" id="btn-switch-all" type="button">Inverti tutte le dimensioni <br /> (ruota tutti di 90°)</button>
 
         <div id="input-add-items-container">
           <input type="number" id="items-to-add" placeholder="Qtà tagli" value="1">
@@ -56,7 +56,8 @@
         </div>
 
         <div id="algorithm-selection-container">
-          <h2>Impostazioni algoritmo (tipo/priorità):</h2>
+          <h2>Impostazioni:</h2>
+
           <select name="algorithm-selection" id="algorithm-selection">
             <option value="minLength">Minima lunghezza</option>
             <option value="improvedMinLength">Minima lunghezza (deeper scan)</option>
@@ -64,7 +65,8 @@
           <select name="sorting-priority" id="sorting-priority">
             <option value="area">Area (default)</option>
             <option value="width">Larghezza</option>
-            <option value="areaRatio">Rapporto area*(min/max)</option>
+            <option value="areaRatioDecr">Rapporto (decr)</option>
+            <option value="areaRatioIncr">Rapporto (incr)</option>
           </select>
         </div>
 
