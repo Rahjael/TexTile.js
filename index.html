@@ -77,14 +77,11 @@
           </select>
         </div>
 
-        <button onclick="domManager.submitButtonActions()" id="btn-submit" type="button">Calcola</button>
+        <button onclick="domManager.submitButtonActions('manual')" id="btn-submit" type="button">Calcola</button>
+        <button onclick="domManager.suggestBestSolution()" id="btn-submit" type="button">Suggerisci soluzione <br /> (impostazioni automatiche)</button>
         <button onclick="domManager.exportForPrinting()" id="btn-exportPDF" type="button">Stampa risultato</button>
-        <button onclick="domManager.randomizeInput()" id="btn-randomize" type="button">Randomizza valori</button>
+        <button onclick="domManager.randomizeInput()" id="btn-randomize" type="button">Randomizza valori <br /> (per test programma)</button>
 
-        <!-- 
-        <button onclick="domManager.testSuite(1)" class="btn-test-suite" type="button">Test 1</button>
-        <button onclick="domManager.testSuite(2)" class="btn-test-suite" type="button">Test 2</button> 
-        -->
       </form>
   </div>
 

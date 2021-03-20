@@ -5,15 +5,27 @@ class Sorter {
     this.pieces = pieces;
     this.canRotate = canRotate;
 
+    this.trimmingOffset = 2;
+
+    this.algoChoices = ['minLength', 'improvedMinLength'];
+    this.sortingCriteria = [
+      'area', 
+      'width', 
+      'areaRatioDecr', 
+      'areaRatioIncr', 
+      'ratioOnlyDecr', 
+      'ratioOnlyIncr'
+    ];
+
 
     // Properties expected:
     // mainArea = array[i][j] for populated grid
     // pieces = array with pieces objects
     // maxLength = int
     this.lastSortingResult = {};
-
-    
-    this.allSolutions = {};
+    this.bestResult = {
+      maxLength: null
+    };
 
 
   }
@@ -39,13 +51,10 @@ class Sorter {
     // x = margin left offset
     // y = margin top offset
 
-
     // Find the sweet spot for every rectangle and attach it
-    pieces.forEach( rect => {
-      
+    pieces.forEach( rect => {      
       // This flag breaks the search if a free spot is found
-      let stopChecking = false;
-      
+      let stopChecking = false;      
       for(let mainY = 0; mainY < mainGrid[0].length; mainY++) {
         for(let mainX = 0; mainX < mainGrid.length; mainX++) {  
           if(this.rectFitsThisXY(mainGrid, mainX, mainY, rect, false)) {
@@ -74,7 +83,6 @@ class Sorter {
     return objectToReturn;
   }
 
-
   shortestHeightSorterWithGridDeeperScan(mainGrid, pieces) {
     // Version with array grid. Cells:
     // true: free space
@@ -85,11 +93,9 @@ class Sorter {
     // y = margin top offset
 
     // Find the sweet spot for every rectangle and attach it
-    pieces.forEach( rect => {
-      
+    pieces.forEach( rect => {      
       // This flag breaks the search if a free spot is found
-      let stopChecking = false;
-      
+      let stopChecking = false;      
       for(let mainY = 0; mainY < mainGrid[0].length; mainY++) {
         for(let mainX = 0; mainX < mainGrid.length; mainX++) {  
           if(this.rectFitsThisXY(mainGrid, mainX, mainY, rect, false)) {
@@ -107,7 +113,6 @@ class Sorter {
       }
     });
 
-
     const objectToReturn = {
       sourcePiece: this.mainArea,
       pieces: pieces
@@ -116,44 +121,57 @@ class Sorter {
     return objectToReturn;
   }
 
+  validateData() {
+    // return boolean
 
+    const isEmptyObject = (obj) => {
+      for(let i in obj) return false;
+      return true;
+    }
 
-
+    // Check for data
+    if(isEmptyObject(this.mainArea) || this.pieces.length === 0) {
+      return false;
+    }
+    else {
+      return true;
+    }
+  }
 
   getSortedData(algoChoice, priorityChoice) {
     // This is the main API to get data from the sorter object
     // This function assumes this.* attributes have been populated
 
     // algoChoices: minLength, improvedMinLength
-    // priorityChoices: area, width, areaRatioDecr, areaRatioIncr
+    // priorityChoices: 'area', 'width', 'areaRatioDecr', 'areaRatioIncr', 'ratioOnlyDecr', 'ratioOnlyIncr'
 
-    
-    // Helper functions
-    const isEmptyObject = (obj) => {
-      for(let i in obj) return false;
-      return true;
-    }
-    
     const sortPieces = (criterion, pieces) => {
       return pieces.sort( (obj1, obj2) => {
         let obj1Ratio;
         let obj2Ratio;
         switch(criterion) {
-          case 'area': return obj2.area - obj1.area;
-          case 'width': return obj2.width - obj1.width;
-          case 'areaRatioDecr': 
+          case this.sortingCriteria[0]: // area
+            return obj2.area - obj1.area;
+
+          case this.sortingCriteria[1]: // width
+            return obj2.width - obj1.width;
+
+          case this.sortingCriteria[2]: // areaRatioDecr
             obj1Ratio = obj1.area * (Math.min(obj1.width, obj1.height) / Math.max(obj1.width, obj1.height));
             obj2Ratio = obj2.area * (Math.min(obj2.width, obj2.height) / Math.max(obj2.width, obj2.height));
             return obj2Ratio - obj1Ratio;
-          case 'areaRatioIncr': 
+
+          case this.sortingCriteria[3]: // areaRatioIncr
             obj1Ratio = obj1.area * (Math.min(obj1.width, obj1.height) / Math.max(obj1.width, obj1.height));
             obj2Ratio = obj2.area * (Math.min(obj2.width, obj2.height) / Math.max(obj2.width, obj2.height));
             return obj1Ratio - obj2Ratio;
-          case 'ratioOnlyDecr':
+
+          case this.sortingCriteria[4]: // ratioOnlyDecr
             obj1Ratio = obj1.width / obj1.height;
             obj2Ratio = obj2.width / obj2.height;
             return obj2Ratio - obj1Ratio;
-          case 'ratioOnlyIncr':
+
+          case this.sortingCriteria[5]: // ratioOnlyIncr
             obj1Ratio = obj1.width / obj1.height;
             obj2Ratio = obj2.width / obj2.height;
             return obj1Ratio - obj2Ratio;
@@ -166,7 +184,7 @@ class Sorter {
     // Common checks and preparation common to all algorithms:
 
     // Check for data
-    if(isEmptyObject(this.mainArea) || this.pieces.length === 0) {
+    if(!this.validateData()) {
       console.log("Sorter Error: missing values for area and pieces");
       return null;
     }
@@ -178,16 +196,14 @@ class Sorter {
     let pieces = this.pieces.map( (piece) => piece );    
     pieces = sortPieces(priorityChoice, pieces);
 
-
     // Apply chosen algorithm
     let orderedData;
-
     switch(algoChoice) {
-      case 'minLength': 
+      case this.algoChoices[0]: 
         orderedData = this.shortestHeightSorterWithGrid(mainGrid, pieces);
         break;
 
-      case 'improvedMinLength':
+      case this.algoChoices[1]:
         orderedData = this.shortestHeightSorterWithGridDeeperScan(mainGrid, pieces);
         break;
 
@@ -204,34 +220,16 @@ class Sorter {
       maxLength: maxLength
     }
 
-    // Trim unnecessary space for better output rendering
-    // TODO fix this offset
-    orderedData.sourcePiece.height = maxLength + 2;
+    orderedData.maxLength = maxLength;
+
+    //console.log(orderedData)
 
     return orderedData;
   }
 
-
-
-
-
-
-
-
-
-
   /*
     END MAIN APIs
   */
- 
-
-
-
-
-
-
-
-
 
 
 
@@ -256,7 +254,6 @@ class Sorter {
 
     return value;
   }
-
 
   attachRectToArea(gridArray, x, y, rect) {
     // Sets rect coordinates and fills grid cells with references to this rect
@@ -325,7 +322,6 @@ class Sorter {
     /*
     // XXX pieces repositioning by user has been disabled at the moment
     // It worked in the prototype but a better implementation is needed
-
 
     if(isUser) {
       // This subroutine is run only if the block is being positioned by the user.
