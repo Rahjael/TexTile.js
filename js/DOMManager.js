@@ -701,10 +701,7 @@ class DOMManager {
     divsUnplaced.forEach( div => unplacedDiv.append(div));
     document.querySelector(this.divUnplacedItemsId).append(unplacedDiv);
   }
-
-
-
-
+  
   /* istanbul ignore next */
   exportForPrinting() {
     // TODO there's a bug in this function:
