@@ -9,7 +9,8 @@ Given a set of N rectangular shapes of any sizes, it helps find the best arrange
 Live testing (App is currently in Italian only, sorry): 
 
 :warning::warning::warning:The program has been tested only with Firefox:warning::warning::warning:
-Temporary link (updated 13/03/2021): http://adrianotesting.000webhostapp.com/textilejs/
+
+Temporary link (updated 20/03/2021): http://adrianotesting.000webhostapp.com/textilejs/
 
 
 
@@ -29,6 +30,8 @@ Temporary link (updated 13/03/2021): http://adrianotesting.000webhostapp.com/tex
 
   - [x] ability to select different criteria for sorting pieces
 
+  - [x] show animation to let user know calculations are currently in progress
+
   - [ ] (for a later time) ability to import/export configurations so user doesn't have to type it in every time. (this is not really needed and it may take a while to implement, marked as optional)
 
   - [ ] (for a later time) implement the ability for the user to manually change shapes' arrangement and suggest a solution to the developer. Gathered data will be used to improve the sorting algorithm. This was implemented and working in the prototype, but I'm keeping it disabled in the current refactoring, because it is still buggy and not really helpful at the moment.
@@ -45,7 +48,7 @@ Temporary link (updated 13/03/2021): http://adrianotesting.000webhostapp.com/tex
 
   - [x] dropdown selector for different sorting criteria
 
-  - [ ] have sorter suggest an optimal solution based on many background tests
+  - [x] have sorter suggest an optimal solution based on many background tests
 
   - [ ] implement an algorithm with a different criterion, prioritising the biggest amount of available squared area after the pieces have been arranged. I have a vague idea of how to do this, but it may take a while.
 
