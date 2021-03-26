@@ -11,9 +11,9 @@ class DOMManager {
   constructor() {
 
     // Default values config
-    this.hHemDefaultValue = 8;
-    this.vHemSupDefaultValue = 5;
-    this.vHemInfDefaultValue = 11;
+    this.hHemDefaultValue = 0;
+    this.vHemSupDefaultValue = 0;
+    this.vHemInfDefaultValue = 0;
 
     this.trimmingOffset = 2;
 
@@ -173,6 +173,11 @@ class DOMManager {
       btn.addEventListener('change', () => this.toggleInputType(btn.value));
     });
 
+    // Set default hem values
+    this.hHemDefaultValue = document.querySelector("#default-h-hem").value;
+    this.vHemSupDefaultValue = document.querySelector("#default-h-hem").value;
+    this.vHemInfDefaultValue = document.querySelector("#default-h-hem").value;
+
     console.log("InputArea primed");
   }
 
@@ -180,6 +185,7 @@ class DOMManager {
   toggleInputType(type) {
     // Changes default values for hems in the input fields
 
+    // Currently not used
     // TODO this is probably not ideal, but it was the simplest way to implement this feature
     // without messing too much with other parts of the code. I will probably make it 
     // nicer in the future, incorporating it into fetchData()
@@ -212,6 +218,34 @@ class DOMManager {
     });
   }
 
+  setAllHems() {
+    // Update this. default hem values from page
+    this.hHemDefaultValue = Number(document.querySelector("#default-h-hem").value);
+    this.vHemSupDefaultValue = Number(document.querySelector("#default-sup-hem").value);
+    this.vHemInfDefaultValue = Number(document.querySelector("#default-inf-hem").value);
+
+    console.log(this.hHemDefaultValue, this.vHemSupDefaultValue, this.vHemInfDefaultValue)
+
+    let hemFields = Array.from(document.querySelectorAll(".item-h-hem"))
+    .concat(Array.from(document.querySelectorAll(".item-v-hem-sup")))
+    .concat(Array.from(document.querySelectorAll(".item-v-hem-inf")));
+
+    hemFields.forEach( field => {
+      switch(field.getAttribute("class")) {
+        case 'item-h-hem': 
+          field.value = this.hHemDefaultValue;
+          break;
+        case 'item-v-hem-sup':
+          field.value = this.vHemSupDefaultValue;
+          break;
+        case 'item-v-hem-inf':
+          field.value = this.vHemInfDefaultValue;
+          break;
+        default:
+          console.log("toggleInputType: error assigning values to fields");
+      }
+    });
+  }
 
   
   createRectangleShapeDiv(itemData, rectClass) {
@@ -403,23 +437,32 @@ class DOMManager {
       });
     });
     if(errorsFound) return null; // Stop fetching
+    
 
+    let rotatePieces = document.querySelector("#rotated-checkbox").checked;
+    console.log("rotatePieces: ", rotatePieces);
+    
     // Populate the array with info about the rectangles
     // The replace() part is to sanitize user input in case of decimals
     // TODO convert values to millimiters?
     dataToReturn.pieces = allData.map( (item, id) => {
       let label = item.querySelector(".item-label").value;
-      let width = Number(item.querySelector(".item-width").value.replace(",", "."));
-      let height = Number(item.querySelector(".item-height").value.replace(",", "."));
       let hHem = Number(item.querySelector(".item-h-hem").value.replace(",", "."));
       let vHemSup = Number(item.querySelector(".item-h-hem").value.replace(",", "."));
       let vHemInf = Number(item.querySelector(".item-h-hem").value.replace(",", "."));
 
+      let width = hHem + Number(item.querySelector(".item-width").value.replace(",", "."));
+      let height = vHemSup + vHemInf + Number(item.querySelector(".item-height").value.replace(",", "."));
+
+      if(rotatePieces) {
+        [width, height] = [height, width];
+      }
+
       return {
         id: id,
         label: label,
-        width: width + hHem,
-        height: height + vHemSup + vHemInf,
+        width: width,
+        height: height,
         area: width * height,
         x: 0,
         y: 0,

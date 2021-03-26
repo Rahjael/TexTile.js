@@ -33,7 +33,7 @@
         <h2>valori in CM</h2>
         <br />
         <br />
-
+<!-- 
         <div id="input-pieces-type-container">
           <div>
             <input type="radio" name="pieces-type" id="radio-fabric" value="fabric" checked>
@@ -43,13 +43,34 @@
             <input type="radio" name="pieces-type" id="radio-pvc" value="pvc">
             <label for="radio-pvc">Pellicole</label>
           </div>
+        </div> 
+-->
+
+        <div id="default-hems-container">
+          <span>Orli:</span>
+          <input type="text" id="default-h-hem" class="hem-field" title="Orlo orizzontale di default" value="0">
+          <input type="text" id="default-sup-hem" class="hem-field" title="Orlo superiore di default" value="0">
+          <input type="text" id="default-inf-hem" class="hem-field" title="Orlo inferiore di default" value="0">
+          
+          <button onclick="domManager.setAllHems()" id="btn-set-all-hems" type="button">Imposta tutti</button>
         </div>
+
+
 
         <div id="input-items-container">
+        
         </div>
 
-        <button onclick="domManager.switchAll()" id="btn-switch-all" type="button">Inverti tutte le dimensioni <br /> (ruota tutti di 90°)</button>
 
+
+
+        <!-- 
+        <button onclick="domManager.switchAll()" id="btn-switch-all" type="button">Inverti tutte le dimensioni <br /> (ruota tutti di 90°)</button> 
+        -->
+        <div id="checkbox-rotate">
+        <input type="checkbox" name="rotate-pieces" id="rotated-checkbox">
+        <label for="rotated-checkbox">Disponi tagli ruotandoli di 90°</label>
+        </div>
         <div id="input-add-items-container">
           <input type="number" id="items-to-add" placeholder="Qtà tagli" value="1">
           <button onclick="domManager.appendNewInputFields()" id="btn-add-items" type="button">Aggiungi tagli</button>
