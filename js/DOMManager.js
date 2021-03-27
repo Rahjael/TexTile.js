@@ -168,10 +168,12 @@ class DOMManager {
     this.appendNewInputFields();
 
     // Add listeners to radio buttons
-    let radioButtons = document.querySelectorAll('input[type=radio]');
-    radioButtons.forEach( btn => {
-      btn.addEventListener('change', () => this.toggleInputType(btn.value));
-    });
+    // let radioButtons = document.querySelectorAll('input[type=radio]');
+    // radioButtons.forEach( btn => {
+    //   btn.addEventListener('change', () => this.toggleInputType(btn.value));
+    // });
+
+    this.addListenersToInputFields();
 
     // Set default hem values
     this.hHemDefaultValue = document.querySelector("#default-h-hem").value;
@@ -179,6 +181,13 @@ class DOMManager {
     this.vHemInfDefaultValue = document.querySelector("#default-h-hem").value;
 
     console.log("InputArea primed");
+  }
+
+  addListenersToInputFields() {
+    let inputs = document.querySelectorAll("input");
+    inputs.forEach( input => {
+      input.addEventListener( 'change', () => this.updateImpExpArea());
+    });
   }
 
   /* istanbul ignore next */
@@ -316,8 +325,9 @@ class DOMManager {
       else {
         this.inputItemsContainerNode.append(newInputField);
       }
-    });    
+    });
     this.reassignInputFieldsIds();
+    this.addListenersToInputFields();
   }
 
   /* istanbul ignore next */
@@ -745,6 +755,58 @@ class DOMManager {
     document.querySelector(this.divUnplacedItemsId).append(unplacedDiv);
   }
   
+
+  updateImpExpArea() {
+    // Is fired when an input element is modified. Updates the area with
+    // a string containing all values. It can be copied and re-imported later
+
+    let inputItems = Array.from(document.querySelectorAll(".input-item"));
+    let exportString = inputItems.map( inputField => Array.from(inputField.querySelectorAll("input")).map( field => field.value).join("-")).join(";");
+    document.querySelector("#imp-exp-textarea").value = exportString;
+
+  }
+
+  importValues() {
+    // Creates new fields with imported values from a pre-formatted string
+    // Example:
+    // "Camera-20-100-0-0-0;Bagno-127-188-0-0-0;Cucina-13-237-0-0-0;Stanza bambini-72-185-0-0-0"
+
+    let inputValues = document.querySelector("#imp-exp-textarea").value.split(";").map( piece => piece.split("-"));
+
+    // Remove all input fields
+    let container = document.querySelector("#input-items-container");
+    container.innerHTML = "";
+    
+    this.inputItemsCounter = 0;
+
+    inputValues.forEach( valueArr => {
+      const newInputField = this.createNewItemInputField();
+
+      newInputField.querySelector(".item-label").value = valueArr[0];
+      newInputField.querySelector(".item-width").value = Number(valueArr[1]);
+      newInputField.querySelector(".item-height").value = Number(valueArr[2]);
+      newInputField.querySelector(".item-h-hem").value = Number(valueArr[3]);
+      newInputField.querySelector(".item-v-hem-sup").value = Number(valueArr[4]);
+      newInputField.querySelector(".item-v-hem-inf").value = Number(valueArr[5]);
+
+      container.append(newInputField);
+    });
+
+
+    this.reassignInputFieldsIds();
+    this.addListenersToInputFields();
+
+  }
+
+
+
+
+
+
+
+
+
+
   /* istanbul ignore next */
   exportForPrinting() {
     // TODO there's a bug in this function:

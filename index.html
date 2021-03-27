@@ -103,6 +103,15 @@
         <button onclick="domManager.exportForPrinting()" id="btn-exportPDF" type="button">Stampa risultato</button>
         <button onclick="domManager.randomizeInput()" id="btn-randomize" type="button">Randomizza valori <br /> (per test programma)</button>
 
+
+        <div id="import-export-area">
+          <label for="imp-exp-textarea">Importa/esporta valori:</label>
+          <br />
+          <textarea name="imp-exp-textarea" id="imp-exp-textarea"></textarea>
+
+          <button onclick="domManager.importValues()" id="btn-import-values" type="button">Importa valori</button>
+
+        </div>
       </form>
   </div>
 

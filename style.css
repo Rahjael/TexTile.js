@@ -177,6 +177,19 @@ button:hover {
 
 }
 
+#import-export-area{
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  align-items: center;
+  margin: 20px;
+}
+
+#btn-import-values {
+  width: 60%;
+  height: 30px;
+}
+
 #input-pieces-type-container {
   display: flex;
   flex-flow: column nowrap;
