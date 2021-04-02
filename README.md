@@ -8,7 +8,8 @@ Given a set of N rectangular shapes of any sizes, it helps find the best arrange
 
 Live testing (App is currently in Italian only, sorry): 
 
-:warning::warning::warning:The program has been tested only with Firefox:warning::warning::warning:
+:warning::warning::warning:Known issues:warning::warning::warning: :
+The program has been tested with both Firefox and Chrome. I like the former better, but apparently there is a bug in how Firefox converts html to pdf, and this messes up the printing function when the output cannot fit in one page. Chrome seems to work perfectly instead.
 
 Temporary link (updated 20/03/2021): http://adrianotesting.000webhostapp.com/textilejs/
 
@@ -47,6 +48,8 @@ Temporary link (updated 20/03/2021): http://adrianotesting.000webhostapp.com/tex
   - [x] ~~radio buttons~~ dropdown selector for different algorithms
 
   - [x] dropdown selector for different sorting criteria
+
+  - [x] added break for simulating multiple containers
 
   - [x] have sorter suggest an optimal solution based on many background tests
 

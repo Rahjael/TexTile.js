@@ -1,6 +1,6 @@
 {
   "name": "textile.js",
-  "version": "1.0.0",
+  "version": "0.9.3",
   "description": "A 2d bin packing problem solver",
   "main": "",
   "scripts": {
