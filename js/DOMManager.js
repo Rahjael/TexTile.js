@@ -448,6 +448,7 @@ class DOMManager {
     this.divSourcePieceDimensionsId = "#source-piece-dimensions";
     this.sourcePieceWidthId = "#source-piece-width";
     this.sourcePieceHeightId = "#source-piece-height";
+    this.cutEvery = "#source-piece-cut-every";
 
     this.divItemsId = "#input-items-container";
     this.divAddItemsId = "#input-add-items-container";
@@ -610,6 +611,7 @@ class DOMManager {
 
 
   extractMilan() {
+    // TODO temporary hardcoded milan measures, delete after work is done
     console.log(this.misure);
 
     let misureString = this.misure.reduce( (acc, obj) => {
@@ -864,7 +866,8 @@ class DOMManager {
     
     dataToReturn.sourcePiece = {
       width: Number(document.querySelector(this.sourcePieceWidthId).value),
-      height: Number(document.querySelector(this.sourcePieceHeightId).value)
+      height: Number(document.querySelector(this.sourcePieceHeightId).value),
+      cutEvery: Number(document.querySelector(this.cutEvery).value)
     };
     
     const allData = Array.from(document.querySelectorAll(".input-item"));
@@ -1318,7 +1321,7 @@ class DOMManager {
 
     let outputHTML = document.querySelector(this.divOutputFrameId).cloneNode(true);
     
-    outputHTML.querySelector(this.divUnplacedItemsId).remove();
+    //outputHTML.querySelector(this.divUnplacedItemsId).remove();
 
     let newWindow = window.open('', '', 'width=800,height=600');
 

@@ -6,6 +6,8 @@ class Sorter {
     this.canRotate = canRotate;
 
     this.trimmingOffset = 2;
+    this.cutLineBeforeOffset = 5;
+    this.cutLineAfterOffset = 5;
 
     this.algoChoices = ['minLength', 'improvedMinLength'];
     this.sortingCriteria = [
@@ -42,7 +44,7 @@ class Sorter {
     this.pieces = object;
   }
 
-  shortestHeightSorterWithGrid(mainGrid, pieces) {
+  shortestHeightSorterWithGrid(mainGrid, cutEvery, pieces) {
     // Version with array grid. Cells:
     // true: free space
     // anything else: occupied space
@@ -56,8 +58,9 @@ class Sorter {
       // This flag breaks the search if a free spot is found
       let stopChecking = false;      
       for(let mainY = 0; mainY < mainGrid[0].length; mainY++) {
-        for(let mainX = 0; mainX < mainGrid.length; mainX++) {  
-          if(this.rectFitsThisXY(mainGrid, mainX, mainY, rect, false)) {
+        for(let mainX = 0; mainX < mainGrid.length; mainX++) {
+          let overlaps = this.pieceOverlapsCutline(mainGrid, mainX, mainY, rect, cutEvery);
+          if(this.rectFitsThisXY(mainGrid, mainX, mainY, rect, false && !overlaps)) {
             this.attachRectToArea(mainGrid, mainX, mainY, rect);
             stopChecking = true;
             break;
@@ -65,6 +68,17 @@ class Sorter {
           else {
             if(mainGrid[mainX][mainY] != true) {
               mainX = mainX + mainGrid[mainX][mainY].width-1;
+            }
+            else if(overlaps) {
+              // If piece overlaps cutline
+              mainY = (() => {
+                let offset = cutEvery;
+                while(offset < mainY) {
+                  offset += cutEvery;                  
+                }
+                return offset + this.cutLineAfterOffset;
+              })();
+              mainX = -1;
             }
             else {
               break;
@@ -83,7 +97,7 @@ class Sorter {
     return objectToReturn;
   }
 
-  shortestHeightSorterWithGridDeeperScan(mainGrid, pieces) {
+  shortestHeightSorterWithGridDeeperScan(mainGrid, cutEvery, pieces) {
     // Version with array grid. Cells:
     // true: free space
     // anything else: occupied space
@@ -93,19 +107,32 @@ class Sorter {
     // y = margin top offset
 
     // Find the sweet spot for every rectangle and attach it
-    pieces.forEach( rect => {      
+    pieces.forEach( rect => {
       // This flag breaks the search if a free spot is found
       let stopChecking = false;      
       for(let mainY = 0; mainY < mainGrid[0].length; mainY++) {
-        for(let mainX = 0; mainX < mainGrid.length; mainX++) {  
-          if(this.rectFitsThisXY(mainGrid, mainX, mainY, rect, false)) {
+        for(let mainX = 0; mainX < mainGrid.length; mainX++) {
+          let overlaps = this.pieceOverlapsCutline(mainGrid, mainX, mainY, rect, cutEvery);
+          if(this.rectFitsThisXY(mainGrid, mainX, mainY, rect, false) && !overlaps) {
             this.attachRectToArea(mainGrid, mainX, mainY, rect);
             stopChecking = true;
             break;
           }
           else {
             if(mainGrid[mainX][mainY] != true) {
+              // If place is occupied
               mainX = mainX + mainGrid[mainX][mainY].width-1;
+            }
+            else if(overlaps) {
+              // If piece overlaps cutline
+              mainY = (() => {
+                let offset = cutEvery;
+                while(offset < mainY) {
+                  offset += cutEvery;                  
+                }
+                return offset + this.cutLineAfterOffset;
+              })();
+              mainX = -1;
             }
           }
         }
@@ -200,11 +227,11 @@ class Sorter {
     let orderedData;
     switch(algoChoice) {
       case this.algoChoices[0]: 
-        orderedData = this.shortestHeightSorterWithGrid(mainGrid, pieces);
+        orderedData = this.shortestHeightSorterWithGrid(mainGrid, this.mainArea.cutEvery, pieces);
         break;
 
       case this.algoChoices[1]:
-        orderedData = this.shortestHeightSorterWithGridDeeperScan(mainGrid, pieces);
+        orderedData = this.shortestHeightSorterWithGridDeeperScan(mainGrid, this.mainArea.cutEvery, pieces);
         break;
 
       default:
@@ -273,8 +300,18 @@ class Sorter {
     //console.log("attached", rect);
   }
   
+
+  pieceOverlapsCutline(gridArray, x, y, rect, cutEvery) {
+    // Check if piece's height overlaps the line of cutEvery
+    for(let pos = gridArray[0].length; pos >= cutEvery; pos -= cutEvery) {
+      if(pos > y && pos < y + rect.height + this.cutLineBeforeOffset) {
+        return true;
+      }
+    }
+  }
+
   /* istanbul ignore next */
-  rectFitsThisXY(gridArray, x, y, rect, isUser) { // Needs a grid
+  rectFitsThisXY(gridArray, x, y, rect, cutEvery, isUser) { // Needs a grid
     // The area is scanned left to right and top to bottom and it assumes
     // the current rectangle is smaller than the previously placed one.
     
