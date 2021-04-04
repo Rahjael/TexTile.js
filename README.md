@@ -11,8 +11,7 @@ Live testing (App is currently in Italian only, sorry):
 :warning::warning::warning:Known issues:warning::warning::warning: :
 The program has been tested with both Firefox and Chrome. I like the former better, but apparently there is a bug in how Firefox converts html to pdf, and this messes up the printing function when the output cannot fit in one page. Chrome seems to work perfectly instead.
 
-Temporary link (updated 20/03/2021): http://adrianotesting.000webhostapp.com/textilejs/
-
+https://rahjael.github.io/TexTile.js/
 
 
 
